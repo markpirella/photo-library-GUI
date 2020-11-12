@@ -8,9 +8,22 @@ import javafx.stage.Stage;
 import view.LoginScreenController;
 
 public class Photos extends Application {
+	
+	/*
+	private static Stage stage;
+
+    public static Stage getStage() {
+        return stage;
+    }
+    
+    public static void setStage(Stage inputStage) {
+    	stage = inputStage;
+    }
+    */
 
 	@Override
 	public void start(Stage primaryStage)  throws Exception {
+		//stage = primaryStage;
 		FXMLLoader loader = new FXMLLoader();   
 	    loader.setLocation(getClass().getResource("/view/LoginScreen.fxml"));
 	    AnchorPane root = (AnchorPane)loader.load();
@@ -19,7 +32,7 @@ public class Photos extends Application {
 	    loginScreenController.start(primaryStage);
 
 	    Scene scene = new Scene(root, 367, 400);
-	    primaryStage.setTitle("Photos");
+	    primaryStage.setTitle("Photos Login");
 	    primaryStage.setScene(scene);
 	    primaryStage.show();
 	}
