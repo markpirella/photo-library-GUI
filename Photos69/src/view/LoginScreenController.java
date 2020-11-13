@@ -82,7 +82,7 @@ public class LoginScreenController implements Serializable {
 		// user submits "admin"
 		if(inputUsername.getText().equals("admin")) {
 			
-			// go to AdminSubsystem stage
+			// **go to AdminSubsystem stage
 			Stage stage = new Stage();
 		    stage.setTitle("Admin Subsystem");
 		    FXMLLoader myLoader = new FXMLLoader(getClass().getResource("AdminSubsystem.fxml"));
@@ -109,7 +109,30 @@ public class LoginScreenController implements Serializable {
 				alert.setContentText("Please try again.");
 				alert.showAndWait();
 			}else { // username found
+				try {
+					System.out.println("username found: " +inputUsername.getText());
+					Photos.setCurrentUserWithUsername(inputUsername.getText());
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 				
+				// **go to UserSubsystem stage
+				Stage stage = new Stage();
+			    stage.setTitle("User Subsystem");
+			    FXMLLoader myLoader = new FXMLLoader(getClass().getResource("UserSubsystem.fxml"));
+			    AnchorPane myPane = (AnchorPane) myLoader.load();            
+			    Scene scene = new Scene(myPane);
+			    stage.setScene(scene);
+			    
+			    // grab current stage (in kind of a cheap way, *shrug*) and close it
+			    Stage currStage = (Stage)inputUsername.getScene().getWindow();
+			    currStage.close();
+			    
+			    UserSubsystemController userSubsystemController = myLoader.getController();
+			    userSubsystemController.start(stage);
+			    
+			    // finally, switch to new stage
+			    stage.show();  
 			}
 		}
 		

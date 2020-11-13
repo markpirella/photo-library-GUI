@@ -1,6 +1,7 @@
 package app;
 
 import model.Program;
+import model.User;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +24,12 @@ public class Photos extends Application {
 	
 	public static Program programSession;
 	
+	//public static User currentUser;
+	
 	public static void writeProgramObj(Program programObj) throws IOException {
+		// set currentUser to null to preserve disk space, currentUser data will be stored elsewhere
+		programObj.setCurrentUser(null);
+		
 		//System.out.println("reached writeprogramobj function");
 		//ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeFile));
@@ -37,6 +43,21 @@ public class Photos extends Application {
 		Program programObj = (Program)ois.readObject();
 		ois.close();
 		return programObj;
+	}
+	
+	public static void setCurrentUserWithUsername(String username) throws IOException, ClassNotFoundException {
+		System.out.println("got to setCurrentUserWithUsername function");
+		if(username == null) {
+			programSession.setCurrentUser(null);
+			return;
+		}
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username+".dat"));
+		System.out.println("grabbed ois");
+		User currentUser = (User)ois.readObject();
+		System.out.println("made currentUser object");
+		ois.close();
+		System.out.println("success! grabbed user object with username: " + currentUser.getUsername());
+		programSession.setCurrentUser(currentUser);
 	}
 	
 	@Override

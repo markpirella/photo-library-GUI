@@ -11,7 +11,7 @@ public class Program implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7099982614968657318L;
-	private List<String> usernames;
+	private ArrayList<String> usernames;
 	private User currentUser;
 	
 	public Program() {
@@ -19,7 +19,7 @@ public class Program implements Serializable {
 		currentUser = null;
 	}
 	
-	public List<String> getUsernames(){
+	public ArrayList<String> getUsernames(){
 		return usernames;
 	}
 	

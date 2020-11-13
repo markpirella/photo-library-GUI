@@ -1,11 +1,14 @@
 package view;
+import model.Program;
 import model.User;
 import app.Photos;
 
 import java.util.Arrays;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +36,7 @@ public class AdminSubsystemController {
 		
 		observableUsernames = FXCollections.observableArrayList(Photos.programSession.getUsernames());
 		userList.setItems(observableUsernames);
+		userList.getSelectionModel().select(0);
 		
 		mainStage.setOnCloseRequest(event -> {
 			try {
@@ -50,14 +54,44 @@ public class AdminSubsystemController {
 		observableUsernames.add(inputUsername.getText());
 		Photos.programSession.getUsernames().add(inputUsername.getText());
 		//System.out.println("printing usernames: " + Arrays.toString(Photos.programSession.getUsernames().toArray()));
-		userList.setItems(observableUsernames);
+		//userList.setItems(observableUsernames);
+		
+		/*
+		// create new .dat for newly created user - will be written to when photos/albums/etc are changed/added to
+		File f = new File(inputUsername.getText() + ".dat");
+		try {
+			f.createNewFile();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		*/
+		
+		// create new user object and serialize and write it to <username>.dat file
+		User newUser = new User(inputUsername.getText());
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(inputUsername.getText()+".dat"));
+			System.out.println("newUser object has username "+newUser.getUsername()+" and it should be " +inputUsername.getText());
+			oos.writeObject(newUser);
+			System.out.println("wrote object");
+			oos.close();
+			System.out.println("wrote User object to file with username: " + newUser.getUsername());
+		}catch(Exception e) {
+			
+		}
+		
+		// clear text field
 		inputUsername.setText("");
+		
 	}
 	
 	@FXML private void handleDeleteButton(ActionEvent event) {
 		
 		int index = userList.getSelectionModel().getSelectedIndex();
 		if(index >= 0) {
+			// delete user's .dat file
+			File f = new File(observableUsernames.get(index) + ".dat");
+			f.delete();
+			
 			observableUsernames.remove(index);
 			Photos.programSession.getUsernames().remove(index);
 		}

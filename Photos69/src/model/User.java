@@ -1,17 +1,23 @@
 package model;
 
-import javafx.collections.ObservableList;
+//import javafx.collections.ObservableList;
 import java.util.ArrayList;
-import javafx.collections.FXCollections;
+//import javafx.collections.FXCollections;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1593856730203724865L;
+	
 	private String username;
-	private ObservableList<Album> albums;
+	private ArrayList<Album> albums;
 	private ArrayList<String> tagTypes;
 	
 	public User(String username) {
 		this.username = username;
-		albums = FXCollections.observableArrayList();
+		albums = new ArrayList<Album>();
 		tagTypes = new ArrayList<String>();
 	}
 	
@@ -19,7 +25,7 @@ public class User {
 		return username;
 	}
 	
-	public ObservableList<Album> getAlbums(){
+	public ArrayList<Album> getAlbums(){
 		return albums;
 	}
 	

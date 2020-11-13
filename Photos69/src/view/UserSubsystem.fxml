@@ -2,25 +2,31 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.UserSubsystemController">
    <children>
-      <ListView layoutX="14.0" layoutY="37.0" prefHeight="345.0" prefWidth="214.0" />
+      <ListView fx:id="albumList" layoutX="14.0" layoutY="37.0" prefHeight="345.0" prefWidth="214.0" />
       <Text layoutX="96.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Albums">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Button layoutX="250.0" layoutY="50.0" mnemonicParsing="false" text="Open Selected Album" />
-      <Button layoutX="262.0" layoutY="165.0" mnemonicParsing="false" text="Add New Album" />
-      <Button layoutX="254.0" layoutY="197.0" mnemonicParsing="false" text="Edit Selected Album" />
-      <Button layoutX="246.0" layoutY="334.0" mnemonicParsing="false" text="Delete Selected Album" />
-      <Button layoutX="451.0" layoutY="42.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="110.0" text="Search Photos" />
-      <Button layoutX="506.0" layoutY="308.0" mnemonicParsing="false" text="Logout" />
-      <Button layoutX="521.0" layoutY="346.0" mnemonicParsing="false" text="Quit" />
+      <Button layoutX="250.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleOpenButton" text="Open Selected Album" />
+      <Button layoutX="264.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add New Album" />
+      <Button layoutX="252.0" layoutY="295.0" mnemonicParsing="false" onAction="#handleEditButton" text="Edit Selected Album" />
+      <Button layoutX="246.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="Delete Selected Album" />
+      <Button layoutX="451.0" layoutY="200.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="110.0" onAction="#handleSearchButton" text="Search Photos" />
+      <Button layoutX="506.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+      <Button layoutX="521.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Quit" />
+      <TextField editable="false" layoutX="451.0" layoutY="48.0" prefHeight="25.0" prefWidth="54.0" />
+      <Text layoutX="246.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Photos in Selected Album:" />
+      <Text layoutX="275.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Range of Photos in Selected Album" />
+      <TextField fx:id="earliestDateDisplay" editable="false" layoutX="285.0" layoutY="109.0" prefHeight="25.0" prefWidth="82.0" />
+      <TextField fx:id="latestDateDisplay" editable="false" layoutX="396.0" layoutY="109.0" prefHeight="25.0" prefWidth="82.0" />
+      <Text layoutX="376.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="to" />
    </children>
 </AnchorPane>

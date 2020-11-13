@@ -1,13 +1,14 @@
 package model;
 
-import javafx.collections.ObservableList;
-import javafx.collections.FXCollections;
+import java.util.ArrayList;
+//import javafx.collections.ObservableList;
+//import javafx.collections.FXCollections;
 import java.io.File;
 import java.util.Date;
 
 public class Album {
 	private String name;
-	private ObservableList<Photo> photos;
+	private ArrayList<Photo> photos;
 	private Date earliestDate;
 	private Date latestDate;
 	
@@ -17,7 +18,7 @@ public class Album {
 	 */
 	public Album(String name) {
 		this.name = name;
-		photos = FXCollections.observableArrayList();
+		photos = new ArrayList<Photo>();
 		earliestDate = null;
 		latestDate = null;
 	}
@@ -27,7 +28,7 @@ public class Album {
 	 * @param name Name of new album
 	 * @param photos ObservableList of photos to be contained in album
 	 */
-	public Album(String name, ObservableList<Photo> photos) {
+	public Album(String name, ArrayList<Photo> photos) {
 		this.name = name;
 		this.photos = photos;
 		earliestDate = findEarliestDate();
