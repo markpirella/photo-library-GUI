@@ -26,4 +26,8 @@ public class User {
 	public ArrayList<String> getTagTypes(){
 		return tagTypes;
 	}
+	
+	public String toString() {
+		return username;
+	}
 }
