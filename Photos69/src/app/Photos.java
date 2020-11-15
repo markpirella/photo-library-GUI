@@ -53,11 +53,27 @@ public class Photos extends Application {
 		}
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username+".dat"));
 		System.out.println("grabbed ois");
-		User currentUser = (User)ois.readObject();
+		programSession.setCurrentUser((User)ois.readObject());
 		System.out.println("made currentUser object");
 		ois.close();
-		System.out.println("success! grabbed user object with username: " + currentUser.getUsername());
-		programSession.setCurrentUser(currentUser);
+		//System.out.println("success! grabbed user object with username: " + currentUser.getUsername());
+	}
+	
+	public static User readUserObj(String username) throws IOException, ClassNotFoundException {
+		//System.out.println("reached writeprogramobj function");
+		//ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username+".dat"));
+		User userObj = (User)ois.readObject();
+		ois.close();
+		return userObj;
+	}
+	
+	public static void writeUserObj(User userObj) throws IOException {
+		//System.out.println("reached writeprogramobj function");
+		//ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(programSession.getCurrentUser().getUsername()+".dat"));
+		oos.writeObject(userObj);
+		oos.close();
 	}
 	
 	@Override

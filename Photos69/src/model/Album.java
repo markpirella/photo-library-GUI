@@ -4,9 +4,14 @@ import java.util.ArrayList;
 //import javafx.collections.ObservableList;
 //import javafx.collections.FXCollections;
 import java.io.File;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Album {
+public class Album implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6482233240369102096L;
 	private String name;
 	private ArrayList<Photo> photos;
 	private Date earliestDate;
@@ -75,6 +80,10 @@ public class Album {
 		latestDate = findLatestDate();
 	}
 	
+	public ArrayList<Photo> getPhotos(){
+		return photos;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -89,5 +98,9 @@ public class Album {
 	
 	public Date getLatestDate() {
 		return latestDate;
+	}
+	
+	public String toString() {
+		return name;
 	}
 }

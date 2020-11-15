@@ -26,4 +26,13 @@ public class Photo extends Image {
 	public ArrayList<Tag> getTags(){
 		return tags;
 	}
+	
+	public String getFilepath() {
+		return filepath;
+	}
+	
+	// allows for extensibility to add the feature to keep track of filepath if user moves file on their computer
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
 }

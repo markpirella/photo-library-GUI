@@ -42,7 +42,7 @@ public class AdminSubsystemController {
 			try {
 				Photos.writeProgramObj(Photos.programSession);
 			}catch(Exception e) {
-				
+				e.printStackTrace();
 			}
 		});
 		
@@ -76,7 +76,7 @@ public class AdminSubsystemController {
 			oos.close();
 			System.out.println("wrote User object to file with username: " + newUser.getUsername());
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		// clear text field

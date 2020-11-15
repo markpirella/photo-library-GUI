@@ -13,9 +13,10 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="89.0" layoutY="120.0" prefHeight="25.0" prefWidth="203.0" />
+      <TextField layoutX="89.0" layoutY="120.0" prefHeight="25.0" prefWidth="203.0" promptText="insert filepath here or click browse" />
       <Button layoutX="192.0" layoutY="180.0" mnemonicParsing="false" text="Confirm" />
       <Button layoutX="130.0" layoutY="180.0" mnemonicParsing="false" text="Cancel" />
       <Button layoutX="27.0" layoutY="353.0" mnemonicParsing="false" text="Quit" />
+      <Button layoutX="310.0" layoutY="120.0" mnemonicParsing="false" text="Browse" textFill="#0d32da" underline="true" />
    </children>
 </AnchorPane>
