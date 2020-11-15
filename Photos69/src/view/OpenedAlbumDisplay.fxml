@@ -9,10 +9,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="806.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.OpenedAlbumDisplayController">
    <children>
-      <ListView layoutX="28.0" layoutY="47.0" prefHeight="490.0" prefWidth="368.0" />
+      <ListView fx:id="photosList" layoutX="28.0" layoutY="47.0" prefHeight="490.0" prefWidth="368.0" />
       <Text layoutX="178.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Photos">
          <font>
             <Font size="22.0" />
@@ -23,23 +22,23 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <TextArea editable="false" layoutX="474.0" layoutY="608.0" prefHeight="99.0" prefWidth="243.0" />
+      <TextArea fx:id="captionDisplay" editable="false" layoutX="474.0" layoutY="608.0" prefHeight="99.0" prefWidth="243.0" />
       <Text layoutX="427.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caption: " />
-      <TextField editable="false" layoutX="793.0" layoutY="610.0" />
+      <TextField fx:id="dateDisplay" editable="false" layoutX="793.0" layoutY="610.0" />
       <Text layoutX="762.0" layoutY="628.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date: " />
-      <Button layoutX="387.0" layoutY="640.0" mnemonicParsing="false" text="Edit Caption" />
-      <Button layoutX="602.0" layoutY="563.0" mnemonicParsing="false" text="&lt;- Previous Photo" />
-      <Button layoutX="731.0" layoutY="563.0" mnemonicParsing="false" text="Next Photo -&gt;" />
-      <Button layoutX="75.0" layoutY="558.0" mnemonicParsing="false" text="Add a Photo to This Album" />
-      <Button layoutX="42.0" layoutY="586.0" mnemonicParsing="false" text="Delete Selected Photo From This Album" />
-      <Button layoutX="44.0" layoutY="616.0" mnemonicParsing="false" text="Copy Selected Photo to Another Album" />
-      <Button layoutX="43.0" layoutY="647.0" mnemonicParsing="false" text="Move Selected Photo to Another Album" />
-      <Button layoutX="47.0" layoutY="734.0" mnemonicParsing="false" text="&lt;- Back" />
-      <Button layoutX="115.0" layoutY="734.0" mnemonicParsing="false" text="Quit" />
-      <ImageView fitHeight="513.0" fitWidth="570.0" layoutX="427.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-      <TextArea layoutX="762.0" layoutY="656.0" prefHeight="133.0" prefWidth="260.0" />
+      <Button layoutX="387.0" layoutY="640.0" mnemonicParsing="false" onAction="#handleEditCaptionButton" text="Edit Caption" />
+      <Button layoutX="602.0" layoutY="563.0" mnemonicParsing="false" onAction="#handlePreviousPhotoButton" text="&lt;- Previous Photo" />
+      <Button layoutX="731.0" layoutY="563.0" mnemonicParsing="false" onAction="#handleNextPhotoButton" text="Next Photo -&gt;" />
+      <Button layoutX="75.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleAddPhotoButton" text="Add a Photo to This Album" />
+      <Button layoutX="42.0" layoutY="586.0" mnemonicParsing="false" onAction="#handleDeletePhotoButton" text="Delete Selected Photo From This Album" />
+      <Button layoutX="44.0" layoutY="616.0" mnemonicParsing="false" onAction="#handleCopyPhotoButton" text="Copy Selected Photo to Another Album" />
+      <Button layoutX="43.0" layoutY="647.0" mnemonicParsing="false" onAction="#handleMovePhotoButton" text="Move Selected Photo to Another Album" />
+      <Button layoutX="47.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleBackButton" text="&lt;- Back" />
+      <Button layoutX="115.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Quit" />
+      <ImageView fx:id="photoDisplay" fitHeight="513.0" fitWidth="570.0" layoutX="427.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
       <Text layoutX="731.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" />
-      <Button layoutX="695.0" layoutY="722.0" mnemonicParsing="false" text="Add Tag" />
-      <Button layoutX="634.0" layoutY="754.0" mnemonicParsing="false" text="Delete Selected Tag" />
+      <Button layoutX="695.0" layoutY="722.0" mnemonicParsing="false" onAction="#handleAddTagButton" text="Add Tag" />
+      <Button layoutX="634.0" layoutY="754.0" mnemonicParsing="false" onAction="#handleDeleteTagButton" text="Delete Selected Tag" />
+      <ListView fx:id="tagsList" layoutX="762.0" layoutY="654.0" prefHeight="140.0" prefWidth="254.0" />
    </children>
 </AnchorPane>

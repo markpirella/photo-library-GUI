@@ -15,11 +15,11 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button layoutX="250.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleOpenButton" text="Open Selected Album" />
-      <Button layoutX="264.0" layoutY="256.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add New Album" />
-      <Button layoutX="252.0" layoutY="295.0" mnemonicParsing="false" onAction="#handleEditButton" text="Edit Selected Album" />
-      <Button layoutX="246.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="Delete Selected Album" />
-      <Button layoutX="451.0" layoutY="200.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="110.0" onAction="#handleSearchButton" text="Search Photos" />
+      <Button layoutX="250.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleOpenButton" text="Open Selected Album" />
+      <Button layoutX="398.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add Album +" />
+      <Button layoutX="401.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleEditButton" text="Confirm Album Name Edit" />
+      <Button layoutX="247.0" layoutY="320.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="Delete Selected Album" />
+      <Button layoutX="450.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="41.0" prefWidth="110.0" text="Search Photos" />
       <Button layoutX="506.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
       <Button layoutX="521.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Quit" />
       <TextField fx:id="numberOfPhotosDisplay" editable="false" layoutX="451.0" layoutY="48.0" prefHeight="25.0" prefWidth="54.0" />
@@ -28,5 +28,7 @@
       <TextField fx:id="earliestDateDisplay" editable="false" layoutX="285.0" layoutY="109.0" prefHeight="25.0" prefWidth="82.0" />
       <TextField fx:id="latestDateDisplay" editable="false" layoutX="396.0" layoutY="109.0" prefHeight="25.0" prefWidth="82.0" />
       <Text layoutX="376.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="to" />
+      <TextField fx:id="inputNewAlbumName" layoutX="238.0" layoutY="231.0" promptText="new album name here..." />
+      <TextField fx:id="inputAlbumRename" layoutX="238.0" layoutY="268.0" />
    </children>
 </AnchorPane>

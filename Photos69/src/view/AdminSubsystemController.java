@@ -1,4 +1,5 @@
 package view;
+import model.Album;
 import model.Program;
 import model.User;
 import app.Photos;
@@ -16,9 +17,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 
 public class AdminSubsystemController {
@@ -49,6 +52,18 @@ public class AdminSubsystemController {
 	}
 	
 	@FXML private void handleSubmitButton(ActionEvent event) {
+		
+		// check for duplicate username
+		for(String u : Photos.programSession.getUsernames()) {
+			if(u.equals(inputUsername.getText())) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("This user already exists");
+				alert.setContentText("Please enter a different username.");
+				alert.showAndWait();
+				return;
+			}
+		}
 		
 		//Photos.programSession.getUsernames().add(inputUsername.getText());
 		observableUsernames.add(inputUsername.getText());

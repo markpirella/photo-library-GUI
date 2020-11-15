@@ -132,7 +132,7 @@ public class LoginScreenController implements Serializable {
 			    userSubsystemController.start(stage);
 			    
 			    // finally, switch to new stage
-			    stage.show();  
+			    stage.show();
 			}
 		}
 		
