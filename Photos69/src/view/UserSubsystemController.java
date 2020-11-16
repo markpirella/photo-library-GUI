@@ -65,7 +65,7 @@ public class UserSubsystemController {
 	    currStage.close();
 	    
 	    OpenedAlbumDisplayController openedAlbumDisplayController = myLoader.getController();
-	    openedAlbumDisplayController.start(stage);
+	    openedAlbumDisplayController.start(stage, albumList.getSelectionModel().getSelectedItem());
 	    
 	    // finally, switch to new stage
 	    stage.show();

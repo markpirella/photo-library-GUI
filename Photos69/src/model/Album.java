@@ -45,9 +45,9 @@ public class Album implements Serializable {
 	 * @return Date object containing earliest date
 	 */
 	private Date findEarliestDate() {
-		long earliest = new File(photos.get(0).filepath).lastModified();
+		long earliest = photos.get(0).getImageFile().lastModified();
 		for(int i = 1; i < photos.size(); i++) {
-			long temp = new File(photos.get(i).filepath).lastModified();
+			long temp = photos.get(i).getImageFile().lastModified();
 			if(temp < earliest) {
 				earliest = temp;
 			}
@@ -60,9 +60,9 @@ public class Album implements Serializable {
 	 * @return Date object containing latest date
 	 */
 	private Date findLatestDate() {
-		long latest = new File(photos.get(0).filepath).lastModified();
+		long latest = photos.get(0).getImageFile().lastModified();
 		for(int i = 1; i < photos.size(); i++) {
-			long temp = new File(photos.get(i).filepath).lastModified();
+			long temp = photos.get(i).getImageFile().lastModified();
 			if(temp > latest) {
 				latest = temp;
 			}
