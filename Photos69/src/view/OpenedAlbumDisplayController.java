@@ -38,6 +38,7 @@ public class OpenedAlbumDisplayController {
 	ObservableList<Photo> observablePhotos;
 	
 	public void start(Stage mainStage, Album openedAlbum) {
+		//openedAlbum.setEarliestAndLatestDates();
 		currentStage = mainStage;
 		this.openedAlbum = openedAlbum;
 		observablePhotos = FXCollections.observableArrayList(openedAlbum.getPhotos());
@@ -145,7 +146,7 @@ public class OpenedAlbumDisplayController {
 			
 		}
 		loadedImages.add(image);
-		openedAlbum.getPhotos().add(newPhoto);
+		openedAlbum.addPhoto(newPhoto);
 		observablePhotos.add(newPhoto);
 		
 		photosList.getSelectionModel().select(observablePhotos.size()-1);
@@ -159,12 +160,14 @@ public class OpenedAlbumDisplayController {
 		int index = photosList.getSelectionModel().getSelectedIndex();
 		if(index >= 0) {
 			observablePhotos.remove(index);
-			openedAlbum.getPhotos().remove(index);
+			openedAlbum.removePhoto(index);
 			loadedImages.remove(index);
 		}
 		
 		if(observablePhotos.size() <= 0) {
 			displayPhotoDetails(true);
+		}else {
+			displayPhotoDetails(false);
 		}
 		
 	}
@@ -198,6 +201,13 @@ public class OpenedAlbumDisplayController {
 			photoDisplay.setImage(null);
 			dateDisplay.setText("");
 			captionDisplay.setText("");
+			return;
+		}
+		if(loadedImages.size() <= 0 || observablePhotos.size() <= 0 || openedAlbum.getPhotos().size() <= 0) {
+			photoDisplay.setImage(null);
+			dateDisplay.setText("");
+			captionDisplay.setText("");
+			return;
 		}
 		Image image = loadedImages.get(photosList.getSelectionModel().getSelectedIndex());
 		if(image == null) {

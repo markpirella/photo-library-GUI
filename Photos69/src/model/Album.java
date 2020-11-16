@@ -45,6 +45,9 @@ public class Album implements Serializable {
 	 * @return Date object containing earliest date
 	 */
 	private Date findEarliestDate() {
+		if(photos.size() <= 0) {
+			return null;
+		}
 		long earliest = photos.get(0).getImageFile().lastModified();
 		for(int i = 1; i < photos.size(); i++) {
 			long temp = photos.get(i).getImageFile().lastModified();
@@ -52,6 +55,7 @@ public class Album implements Serializable {
 				earliest = temp;
 			}
 		}
+		System.out.println("earliest date for album " + name + " is " + new Date(earliest));
 		return new Date(earliest);
 	}
 	
@@ -60,6 +64,9 @@ public class Album implements Serializable {
 	 * @return Date object containing latest date
 	 */
 	private Date findLatestDate() {
+		if(photos.size() <= 0) {
+			return null;
+		}
 		long latest = photos.get(0).getImageFile().lastModified();
 		for(int i = 1; i < photos.size(); i++) {
 			long temp = photos.get(i).getImageFile().lastModified();
@@ -67,6 +74,7 @@ public class Album implements Serializable {
 				latest = temp;
 			}
 		}
+		System.out.println("latest date for album " + name + " is " + new Date(latest));
 		return new Date(latest);
 	}
 	
@@ -76,6 +84,12 @@ public class Album implements Serializable {
 	 */
 	public void addPhoto(Photo photo) {
 		photos.add(photos.size(), photo);
+		earliestDate = findEarliestDate();
+		latestDate = findLatestDate();
+	}
+	
+	public void removePhoto(int index) {
+		photos.remove(index);
 		earliestDate = findEarliestDate();
 		latestDate = findLatestDate();
 	}
@@ -98,6 +112,11 @@ public class Album implements Serializable {
 	
 	public Date getLatestDate() {
 		return latestDate;
+	}
+	
+	public void setEarliestAndLatestDates() {
+		earliestDate = findEarliestDate();
+		latestDate = findLatestDate();
 	}
 	
 	public String toString() {

@@ -239,13 +239,18 @@ public class UserSubsystemController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.exit(0);;
+		System.exit(0);
 		
 	}
 	
 	private void displayAlbumDetails() {
 		if(albumList.getSelectionModel().getSelectedIndex() >= 0) {
 			Album current = albumList.getSelectionModel().getSelectedItem();
+			/*
+			if(current.getPhotos().size() > 0) {
+				current.setEarliestAndLatestDates();
+			}
+			*/
 			numberOfPhotosDisplay.setText(""+current.getPhotos().size());
 			earliestDateDisplay.setText(""+current.getEarliestDate());
 			latestDateDisplay.setText(""+current.getLatestDate());
