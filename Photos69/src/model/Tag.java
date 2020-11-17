@@ -31,4 +31,8 @@ public class Tag implements Serializable {
 	public String toString() {
 		return "(\""+type+"\""+","+"\""+value+"\")";
 	}
+	
+	public boolean equals(Tag otherTag) {
+		return otherTag.getType() == this.type && otherTag.getValue() == this.value;
+	}
 }

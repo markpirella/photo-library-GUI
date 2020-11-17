@@ -6,7 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -15,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Album;
 import model.Photo;
@@ -23,6 +27,8 @@ import model.TagType;
 import java.time.*;
 import java.time.format.*;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.io.IOException;
 
 public class PhotoSearchController {
 	
@@ -44,6 +50,7 @@ public class PhotoSearchController {
 		operation.getItems().add("AND");
 		operation.getItems().add("OR");
 		operation.getItems().add("Only search using first tag");
+		operation.getItems().add("Only search using second tag");
 		
 		observableExistingTagTypes = FXCollections.observableArrayList(Photos.programSession.getCurrentUser().getTagTypes());
 		firstTagType.setItems(observableExistingTagTypes);
@@ -70,6 +77,16 @@ public class PhotoSearchController {
 		            setGraphic(imageView);
 		        }
 		    }
+		});
+		
+		
+		
+		mainStage.setOnCloseRequest(event -> {
+			try {
+				Photos.writeUserObj(Photos.programSession.getCurrentUser());
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		});
 		
 	}
@@ -122,7 +139,9 @@ public class PhotoSearchController {
 			Album album = currentUser.getAlbums().get(i);
 			for(int j = 0; j < album.getPhotos().size(); j++) { // traverse all songs in each album
 				Photo photo = album.getPhotos().get(j);
-				if(photo.getDate().compareTo(startDateTime) > 0 && photo.getDate().compareTo(endDateTime) < 0) { // falls in date range
+				if(photo.getDate().compareTo(startDateTime) > 0 
+						&& photo.getDate().compareTo(endDateTime) < 0
+						&& searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
 					searchResultsArrayList.add(photo);
 					Image image = null;
 					try {
@@ -142,19 +161,267 @@ public class PhotoSearchController {
 		
 	}
 	
-	@FXML private void handleBackButton(ActionEvent event) {
+	@FXML private void handleBackButton(ActionEvent event) throws IOException {
+		
+		// **go to UserSubsystem stage
+		Stage stage = new Stage();
+	    stage.setTitle("User Subsystem");
+	    FXMLLoader myLoader = new FXMLLoader(getClass().getResource("UserSubsystem.fxml"));
+	    AnchorPane myPane = (AnchorPane) myLoader.load();            
+	    Scene scene = new Scene(myPane);
+	    stage.setScene(scene);
+	    
+	    // grab current stage (in kind of a cheap way, *shrug*) and close it
+	    Stage currStage = (Stage)searchResults.getScene().getWindow();
+	    currStage.close();
+	    
+	    UserSubsystemController userSubsystemController = myLoader.getController();
+	    userSubsystemController.start(stage);
+	    
+	    // finally, switch to new stage
+	    stage.show();
 		
 	}
 	
 	@FXML private void handleQuitButton(ActionEvent event) {
 		
+		try {
+			Photos.writeUserObj(Photos.programSession.getCurrentUser());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.exit(0);
+		
 	}
 	
 	@FXML private void handleSearchByTagButton(ActionEvent event) {
 		
+		if(operation.getValue() == null) { // operation not specified
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("You must enter specify the search instructions from the drop-down menu");
+			alert.setContentText("Please try again.");
+			alert.showAndWait();
+			return;
+		}else if( (firstTagValue.getText().equals("") || firstTagType.getValue() == null || secondTagValue.getText().equals("") || secondTagType.getValue() == null) && ( operation.getValue().equals("AND") || operation.getValue().equals("OR") )) { // both tgs need to be completely filled out but aren't
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("You must enter a type and value for both tags to do an AND or OR search");
+			alert.setContentText("Please try again.");
+			alert.showAndWait();
+			return;
+		}else if((firstTagValue.getText().equals("") || firstTagType.getValue() == null) && !(operation.getValue().equals("Only search using second tag"))) { // some field for first tag left empty
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("You must enter values for the first tag's type and value");
+			alert.setContentText("Please try again.");
+			alert.showAndWait();
+			return;
+		}else if((secondTagValue.getText().equals("") || secondTagType.getValue() == null) && !(operation.getValue().equals("Only search using first tag"))) { // some field for second tag left empty
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("You must enter values for the second tag's type and value");
+			alert.setContentText("Please try again.");
+			alert.showAndWait();
+			return;
+		}
+		
+		Tag tag1 = null;
+		Tag tag2 = null;
+		searchResultsArrayList = new ArrayList<Photo>();
+		loadedImages = new ArrayList<Image>();
+		
+		// now grab tag values and search with them
+		if(operation.getValue().equals("AND")) { // grab both tags
+			tag1 = new Tag(firstTagType.getValue().getType(), firstTagValue.getText());
+			tag2 = new Tag(secondTagType.getValue().getType(), secondTagValue.getText());
+			// now search
+			for(int i = 0; i < currentUser.getAlbums().size(); i++) { // traverse all of user's albums
+				Album album = currentUser.getAlbums().get(i);
+				for(int j = 0; j < album.getPhotos().size(); j++) { // traverse all songs in each album
+					Photo photo = album.getPhotos().get(j);
+					int index1 = -1;
+					int index2 = -1;
+					for(int k = 0; k < photo.getTags().size(); k++) {
+						if(tag1.getType().equals(photo.getTags().get(k).getType()) && tag1.getValue().equals(photo.getTags().get(k).getValue())) {
+							index1 = k;
+						}
+						if(tag2.getType().equals(photo.getTags().get(k).getType()) && tag2.getValue().equals(photo.getTags().get(k).getValue())) {
+							index2 = k;
+						}
+						if(index1 != -1 && index2 != -1) {
+							break;
+						}
+					}
+					if(index1 != -1 && // found first tag
+							index2 != -1 && // found second tag
+							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						searchResultsArrayList.add(photo);
+						Image image = null;
+						try {
+							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
+						}catch(Exception e) {
+							
+						}
+						loadedImages.add(image);
+					}
+				}
+			}
+			
+		}else if(operation.getValue().equals("OR")) { // grab both tags
+			tag1 = new Tag(firstTagType.getValue().getType(), firstTagValue.getText());
+			tag2 = new Tag(secondTagType.getValue().getType(), secondTagValue.getText());
+			// now search
+			for(int i = 0; i < currentUser.getAlbums().size(); i++) { // traverse all of user's albums
+				Album album = currentUser.getAlbums().get(i);
+				for(int j = 0; j < album.getPhotos().size(); j++) { // traverse all songs in each album
+					Photo photo = album.getPhotos().get(j);
+					int index1 = -1;
+					int index2 = -1;
+					for(int k = 0; k < photo.getTags().size(); k++) {
+						if(tag1.getType().equals(photo.getTags().get(k).getType()) && tag1.getValue().equals(photo.getTags().get(k).getValue())) {
+							index1 = k;
+							break;
+						}
+						if(tag2.getType().equals(photo.getTags().get(k).getType()) && tag2.getValue().equals(photo.getTags().get(k).getValue())) {
+							index2 = k;
+							break;
+						}
+					}
+					if((index1 != -1 || // found first tag
+							index2 != -1) && // found second tag
+							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						searchResultsArrayList.add(photo);
+						Image image = null;
+						try {
+							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
+						}catch(Exception e) {
+							
+						}
+						loadedImages.add(image);
+					}
+				}
+			}
+		
+		}else if(operation.getValue().equals("Only search using first tag")) { // get first tag
+			System.out.println("reached right spot");
+			tag1 = new Tag(firstTagType.getValue().getType(), firstTagValue.getText());
+			// now search
+			for(int i = 0; i < currentUser.getAlbums().size(); i++) { // traverse all of user's albums
+				Album album = currentUser.getAlbums().get(i);
+				for(int j = 0; j < album.getPhotos().size(); j++) { // traverse all songs in each album
+					Photo photo = album.getPhotos().get(j);
+					int index = -1;
+					for(int k = 0; k < photo.getTags().size(); k++) {
+						if(tag1.getType().equals(photo.getTags().get(k).getType()) && tag1.getValue().equals(photo.getTags().get(k).getValue())) {
+							index = k;
+							break;
+						}
+					}
+					if(index != -1 && // found first tag
+							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						searchResultsArrayList.add(photo);
+						Image image = null;
+						try {
+							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
+						}catch(Exception e) {
+							
+						}
+						loadedImages.add(image);
+					}
+				}
+			}
+		}else if(operation.getValue().equals("Only search using second tag")) { // get second tag
+			tag2 = new Tag(secondTagType.getValue().getType(), secondTagValue.getText());
+			// now search
+			for(int i = 0; i < currentUser.getAlbums().size(); i++) { // traverse all of user's albums
+				Album album = currentUser.getAlbums().get(i);
+				for(int j = 0; j < album.getPhotos().size(); j++) { // traverse all songs in each album
+					Photo photo = album.getPhotos().get(j);
+					int index = -1;
+					for(int k = 0; k < photo.getTags().size(); k++) {
+						if(tag2.getType().equals(photo.getTags().get(k).getType()) && tag2.getValue().equals(photo.getTags().get(k).getValue())) {
+							index = k;
+							break;
+						}
+					}
+					if(index != -1 && // found second tag
+							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						searchResultsArrayList.add(photo);
+						Image image = null;
+						try {
+							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
+						}catch(Exception e) {
+							
+						}
+						loadedImages.add(image);
+					}
+				}
+			}
+		}
+		
+		if(searchResultsArrayList.size() < 1) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("No results found.");
+			alert.showAndWait();
+		}
+		
+		// display results
+		observablePhotos = FXCollections.observableArrayList(searchResultsArrayList);
+		searchResults.setItems(observablePhotos);
+		searchResults.refresh();
+		
 	}
 	
 	@FXML private void handleCreateAlbumButton(ActionEvent event) {
+		
+		if(newAlbumName.getText().equals("")) { // operation not specified
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("You must enter a name for your new album");
+			alert.setContentText("Please try again.");
+			alert.showAndWait();
+			return;
+		}
+		
+		// see if album name already exists
+		int index = -1;
+		for(int i = 0; i < currentUser.getAlbums().size(); i++) {
+			if(currentUser.getAlbums().get(i).getName().equals(newAlbumName.getText())) {
+				index = i;
+			}
+		}
+		
+		if(index != -1) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("This album name is already being used");
+			alert.setContentText("Please try a different name.");
+			alert.showAndWait();
+			return;
+		}
+		
+		for(int i = 0; i < searchResultsArrayList.size(); i++) {
+			System.out.println(searchResultsArrayList.get(i));
+		}
+		
+		
+		// check if user is ok with making an empty album, if it's empty
+		if(searchResultsArrayList.size() < 1) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation Dialog");
+			alert.setHeaderText("Confirmation needed!");
+			alert.setContentText("Are you sure you want to create an empty album?");
+	
+			Optional<ButtonType> result = alert.showAndWait();
+			if (!(result.get() == ButtonType.OK)){ // user did not press ok
+				return;
+			}
+		}
+		
+		// album name is good, so create it!
 		
 	}
 	
