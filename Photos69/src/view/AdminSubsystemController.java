@@ -5,6 +5,7 @@ import model.User;
 import app.Photos;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -22,6 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 
 public class AdminSubsystemController {
@@ -102,6 +104,17 @@ public class AdminSubsystemController {
 	@FXML private void handleDeleteButton(ActionEvent event) {
 		
 		int index = userList.getSelectionModel().getSelectedIndex();
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Confirmation needed!");
+		alert.setContentText("Are you sure you want to delete user '" +observableUsernames.get(index)+"'?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (!(result.get() == ButtonType.OK)){ // user did not press ok
+			return;
+		}
+		
 		if(index >= 0) {
 			// delete user's .dat file
 			File f = new File(observableUsernames.get(index) + ".dat");
