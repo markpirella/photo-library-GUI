@@ -14,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -32,16 +33,23 @@ import java.io.IOException;
 
 public class PhotoSearchController {
 	
-	@FXML TextField startDate, endDate, firstTagValue, secondTagValue, newAlbumName;
+	@FXML TextField startDate, endDate, firstTagValue, secondTagValue, newAlbumName, dateDisplay;
+	@FXML TextArea captionDisplay;
 	@FXML ComboBox<TagType> firstTagType, secondTagType;
 	@FXML ChoiceBox<String> operation;
 	@FXML ListView<Photo> searchResults;
+	@FXML ListView<Tag> tagsList;
+	@FXML ImageView photoDisplay;
 	
 	ObservableList<TagType> observableExistingTagTypes;
 	User currentUser;
 	ObservableList<Photo> observablePhotos;
 	ArrayList<Image> loadedImages;
 	ArrayList<Photo> searchResultsArrayList;
+	ObservableList<Tag> observableTags;
+	ArrayList<Tag> tagsArrayList;
+	ArrayList<Tag> garbage;
+	boolean execute;
 	
 	public void start(Stage mainStage) {
 		
@@ -88,6 +96,13 @@ public class PhotoSearchController {
 				e.printStackTrace();
 			}
 		});
+		
+		boolean execute = true;
+		garbage = new ArrayList<Tag>();
+		observableTags = FXCollections.observableArrayList(garbage);
+		
+		// add listener to ensure that whenever user selects different album, displayed details are updated
+		searchResults.getSelectionModel().selectedIndexProperty().addListener((obs, oldVal, newVal) -> displayPhotoDetails(false));
 		
 	}
 	
@@ -155,9 +170,37 @@ public class PhotoSearchController {
 		}
 		
 		observablePhotos = FXCollections.observableArrayList(searchResultsArrayList);
+		execute = false;
 		searchResults.setItems(observablePhotos);
 		searchResults.refresh();
 		
+		searchResults.getSelectionModel().select(0);
+		
+		execute = true;
+		if(observablePhotos.size() <= 0) {
+			displayPhotoDetails(true);
+		}else {
+			displayPhotoDetails(false);
+		}
+		
+		
+	}
+	
+	@FXML private void handlePreviousPhotoButton(ActionEvent event) {
+		
+		int index = searchResults.getSelectionModel().getSelectedIndex()-1;
+		if(index >= 0) {
+			searchResults.getSelectionModel().select(index);
+		}
+		
+	}
+	
+	@FXML private void handleNextPhotoButton(ActionEvent event) {
+		
+		int index = searchResults.getSelectionModel().getSelectedIndex()+1;
+		if(index < observablePhotos.size()) {
+			searchResults.getSelectionModel().select(index);
+		}
 		
 	}
 	
@@ -370,8 +413,25 @@ public class PhotoSearchController {
 		
 		// display results
 		observablePhotos = FXCollections.observableArrayList(searchResultsArrayList);
+		System.out.println("about to set searchResults");
+		execute = false;
 		searchResults.setItems(observablePhotos);
+		System.out.println("just set searchResults");
 		searchResults.refresh();
+		if(observablePhotos.size() >= 1) {
+			System.out.println("about to select 0 searchResults");
+			searchResults.getSelectionModel().select(0);
+			System.out.println("just selected 0 in searchResults");
+			
+			//tagsArrayList = searchResults.getSelectionModel().getSelectedItem().getTags();
+		}
+		
+		execute = true;
+		if(observablePhotos.size() <= 0) {
+			displayPhotoDetails(true);
+		}else {
+			displayPhotoDetails(false);
+		}
 		
 	}
 	
@@ -421,8 +481,32 @@ public class PhotoSearchController {
 			}
 		}
 		
-		// album name is good, so create it!
+		// check for duplicate album name for this user
+		for(Album a : currentUser.getAlbums()) {
+			if(a.getName().equals(newAlbumName.getText())) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("This album name is already being used");
+				alert.setContentText("Please enter a different album name.");
+				alert.showAndWait();
+				return;
+			}
+		}
 		
+		// album name is good, so create it!
+		Album newAlbum = new Album(newAlbumName.getText());
+		for(Photo p : searchResultsArrayList) {
+			newAlbum.addPhoto(p);
+		}
+		currentUser.getAlbums().add(newAlbum);
+		// alert user to successful creation
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("New album successfully created!");
+		alert.showAndWait();
+		// clear input
+		newAlbumName.setText("");
 	}
 	
 	private void loadImages() {
@@ -445,6 +529,95 @@ public class PhotoSearchController {
 			}
 		}
 		return null;
+	}
+	
+	private void displayPhotoDetails(boolean makeEverythingEmpty) {
+		System.out.println("DISPLAY PHOTO DETAILS CALLED");
+		if(!execute) {
+			return;
+		}
+		if(searchResults.getSelectionModel().getSelectedIndex() < 0 || searchResults.getSelectionModel().getSelectedIndex() >= observablePhotos.size()) {
+			photoDisplay.setImage(null);
+			dateDisplay.setText("");
+			captionDisplay.setText("");
+			tagsList = null;
+			return;
+		}
+		if(makeEverythingEmpty) {
+			photoDisplay.setImage(null);
+			dateDisplay.setText("");
+			captionDisplay.setText("");
+			tagsList = null;
+			return;
+		}
+		if(loadedImages.size() <= 0 || observablePhotos.size() <= 0 || searchResultsArrayList.size() <= 0) {
+			photoDisplay.setImage(null);
+			dateDisplay.setText("");
+			captionDisplay.setText("");
+			tagsList = null;
+			return;
+		}
+		Image image = loadedImages.get(searchResults.getSelectionModel().getSelectedIndex());
+		if(image == null) {
+			return;
+		}
+		searchResults.refresh();
+		photoDisplay.setImage(image);
+		dateDisplay.setText(searchResults.getSelectionModel().getSelectedItem().getDate().toString());
+		captionDisplay.setText(searchResults.getSelectionModel().getSelectedItem().getCaption());
+		// fill in tagsArrayList
+		/*
+		tagsArrayList = new ArrayList<Tag>();
+		if(searchResults.getSelectionModel().getSelectedItem() != null) {
+			for(Tag t : searchResultsArrayList.get(searchResults.getSelectionModel().getSelectedIndex()).getTags()) {
+				System.out.println("adding tag "+t+" to tagsList");
+				tagsArrayList.add(t);
+			}
+		}else {
+			tagsArrayList = null;
+		}
+		*/
+		//tagsArrayList = searchResults.getSelectionModel().getSelectedItem().getTags();
+		if(observablePhotos.size() > 0 && searchResults.getSelectionModel().getSelectedIndex() >= 0 && searchResults.getSelectionModel().getSelectedIndex() < observablePhotos.size()) {
+			
+			/*
+			ObservableList<Tag> newObservableTags;
+			newObservableTags = FXCollections.observableArrayList(tagsArrayList);
+			*/
+			//observableTags = newObservableTags;
+			//observableTags.removeAll();
+			/*
+			for(int i = 0; i < observableTags.size(); i++) {
+				observableTags.remove(i);
+			}
+			*/
+			observableTags.clear();
+			System.out.print("Printing observable tags after removing all: ");
+			for(Tag t : observableTags) {
+				System.out.print(t+"// ");
+				//observableTags.add(t);
+			}
+			System.out.print("Printing observable tags after adding all: ");
+			for(Tag t : searchResults.getSelectionModel().getSelectedItem().getTags()) {
+				//System.out.print(t+"// ");
+				observableTags.add(t);
+			}
+			for(Tag t : observableTags) {
+				System.out.print(t+"// ");
+				//observableTags.add(t);
+			}
+			//observableTags.remove(0);
+			System.out.println();
+			if(observableTags.size() > 0) {
+				//tagsList = null;
+				tagsList.setItems(observableTags);
+			}else {
+				tagsList.setItems(null);
+			}
+		}else {
+			tagsList.setItems(null);
+		}
+		System.out.println("-----------------------------------");
 	}
 
 }
