@@ -87,11 +87,11 @@ public class AdminSubsystemController {
 		User newUser = new User(inputUsername.getText());
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(inputUsername.getText()+".dat"));
-			System.out.println("newUser object has username "+newUser.getUsername()+" and it should be " +inputUsername.getText());
+			//System.out.println("newUser object has username "+newUser.getUsername()+" and it should be " +inputUsername.getText());
 			oos.writeObject(newUser);
-			System.out.println("wrote object");
+			//System.out.println("wrote object");
 			oos.close();
-			System.out.println("wrote User object to file with username: " + newUser.getUsername());
+			//System.out.println("wrote User object to file with username: " + newUser.getUsername());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -347,7 +347,7 @@ public class PhotoSearchController {
 			}
 		
 		}else if(operation.getValue().equals("Only search using first tag")) { // get first tag
-			System.out.println("reached right spot");
+			//System.out.println("reached right spot");
 			tag1 = new Tag(firstTagType.getValue().getType(), firstTagValue.getText());
 			// now search
 			for(int i = 0; i < currentUser.getAlbums().size(); i++) { // traverse all of user's albums
@@ -413,15 +413,15 @@ public class PhotoSearchController {
 		
 		// display results
 		observablePhotos = FXCollections.observableArrayList(searchResultsArrayList);
-		System.out.println("about to set searchResults");
+		//System.out.println("about to set searchResults");
 		execute = false;
 		searchResults.setItems(observablePhotos);
-		System.out.println("just set searchResults");
+		//System.out.println("just set searchResults");
 		searchResults.refresh();
 		if(observablePhotos.size() >= 1) {
-			System.out.println("about to select 0 searchResults");
+			//System.out.println("about to select 0 searchResults");
 			searchResults.getSelectionModel().select(0);
-			System.out.println("just selected 0 in searchResults");
+			//System.out.println("just selected 0 in searchResults");
 			
 			//tagsArrayList = searchResults.getSelectionModel().getSelectedItem().getTags();
 		}
@@ -463,10 +463,11 @@ public class PhotoSearchController {
 			return;
 		}
 		
+		/*
 		for(int i = 0; i < searchResultsArrayList.size(); i++) {
 			System.out.println(searchResultsArrayList.get(i));
 		}
-		
+		*/
 		
 		// check if user is ok with making an empty album, if it's empty
 		if(searchResultsArrayList.size() < 1) {
@@ -532,7 +533,7 @@ public class PhotoSearchController {
 	}
 	
 	private void displayPhotoDetails(boolean makeEverythingEmpty) {
-		System.out.println("DISPLAY PHOTO DETAILS CALLED");
+		//System.out.println("DISPLAY PHOTO DETAILS CALLED");
 		if(!execute) {
 			return;
 		}
@@ -592,22 +593,26 @@ public class PhotoSearchController {
 			}
 			*/
 			observableTags.clear();
-			System.out.print("Printing observable tags after removing all: ");
+			//System.out.print("Printing observable tags after removing all: ");
+			/*
 			for(Tag t : observableTags) {
 				System.out.print(t+"// ");
 				//observableTags.add(t);
 			}
-			System.out.print("Printing observable tags after adding all: ");
+			*/
+			//System.out.print("Printing observable tags after adding all: ");
 			for(Tag t : searchResults.getSelectionModel().getSelectedItem().getTags()) {
 				//System.out.print(t+"// ");
 				observableTags.add(t);
 			}
+			/*
 			for(Tag t : observableTags) {
 				System.out.print(t+"// ");
 				//observableTags.add(t);
 			}
+			*/
 			//observableTags.remove(0);
-			System.out.println();
+			//System.out.println();
 			if(observableTags.size() > 0) {
 				//tagsList = null;
 				tagsList.setItems(observableTags);
@@ -617,7 +622,7 @@ public class PhotoSearchController {
 		}else {
 			tagsList.setItems(null);
 		}
-		System.out.println("-----------------------------------");
+		//System.out.println("-----------------------------------");
 	}
 
 }
