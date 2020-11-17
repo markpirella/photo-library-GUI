@@ -13,12 +13,14 @@ public class User implements Serializable {
 	
 	private String username;
 	private ArrayList<Album> albums;
-	private ArrayList<String> tagTypes;
+	private ArrayList<TagType> tagTypes;
 	
 	public User(String username) {
 		this.username = username;
 		albums = new ArrayList<Album>();
-		tagTypes = new ArrayList<String>();
+		tagTypes = new ArrayList<TagType>();
+		tagTypes.add(new TagType("location", false));
+		tagTypes.add(new TagType("person", true));
 	}
 	
 	public String getUsername() {
@@ -29,7 +31,7 @@ public class User implements Serializable {
 		return albums;
 	}
 	
-	public ArrayList<String> getTagTypes(){
+	public ArrayList<TagType> getTagTypes(){
 		return tagTypes;
 	}
 	

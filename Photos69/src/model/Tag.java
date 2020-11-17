@@ -9,18 +9,26 @@ public class Tag implements Serializable {
 	 */
 	private static final long serialVersionUID = 1480471599797664839L;
 	private String type;
-	private ArrayList<String> values;
+	private String value;
 	
-	public Tag(String type, ArrayList<String> values) {
+	public Tag(String type, String value) {
 		this.type = type;
-		this.values = values;
+		this.value = value;
 	}
 	
 	public String getType() {
 		return type;
 	}
 	
-	public ArrayList<String> getValues() {
-		return values;
+	public String getValue() {
+		return value;
+	}
+	
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
+	public String toString() {
+		return "(\""+type+"\""+","+"\""+value+"\")";
 	}
 }

@@ -20,7 +20,7 @@
       <Button layoutX="401.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleEditButton" text="Confirm Album Name Edit" />
       <Button layoutX="247.0" layoutY="320.0" mnemonicParsing="false" onAction="#handleDeleteButton" text="Delete Selected Album" />
       <Button layoutX="450.0" layoutY="175.0" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="41.0" prefWidth="110.0" text="Search Photos" />
-      <Button layoutX="506.0" layoutY="308.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
+      <Button layoutX="506.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleLogoutButton" text="Logout" />
       <Button layoutX="521.0" layoutY="346.0" mnemonicParsing="false" onAction="#handleQuitButton" text="Quit" />
       <TextField fx:id="numberOfPhotosDisplay" editable="false" layoutX="451.0" layoutY="48.0" prefHeight="25.0" prefWidth="54.0" />
       <Text layoutX="246.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Photos in Selected Album:" />

@@ -52,6 +52,10 @@ public class UserSubsystemController {
 	
 	@FXML private void handleOpenButton(ActionEvent event) throws IOException {
 		
+		if(albumList.getSelectionModel().getSelectedIndex() < 0 || albumList.getSelectionModel().getSelectedIndex() >= observableAlbums.size()) {
+			return;
+		}
+		
 		// **go to OpenedAlbumDisplay stage
 		Stage stage = new Stage();
 	    stage.setTitle(albumList.getSelectionModel().getSelectedItem().getName());
