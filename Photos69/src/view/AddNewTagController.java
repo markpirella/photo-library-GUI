@@ -141,9 +141,21 @@ public class AddNewTagController {
 	
 	@FXML private void handleCancelButton(ActionEvent event) {
 		
+		// close window
+		Stage currStage = (Stage)existingTagTypesList.getScene().getWindow();
+	    currStage.close();
+	    return;
+		
 	}
 	
 	@FXML private void handleQuitButton(ActionEvent event) {
+		
+		try {
+			Photos.writeUserObj(Photos.programSession.getCurrentUser());
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.exit(0);
 		
 	}
 	

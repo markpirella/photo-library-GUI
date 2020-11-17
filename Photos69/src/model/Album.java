@@ -5,6 +5,9 @@ import java.util.ArrayList;
 //import javafx.collections.FXCollections;
 import java.io.File;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Album implements Serializable {
@@ -14,8 +17,8 @@ public class Album implements Serializable {
 	private static final long serialVersionUID = -6482233240369102096L;
 	private String name;
 	private ArrayList<Photo> photos;
-	private Date earliestDate;
-	private Date latestDate;
+	private LocalDateTime earliestDate;
+	private LocalDateTime latestDate;
 	
 	/**
 	 * Constructor for use when user simply wants to create new empty album
@@ -44,7 +47,7 @@ public class Album implements Serializable {
 	 * method to obtain earliest date of photos in album
 	 * @return Date object containing earliest date
 	 */
-	private Date findEarliestDate() {
+	private LocalDateTime findEarliestDate() {
 		if(photos.size() <= 0) {
 			return null;
 		}
@@ -55,15 +58,17 @@ public class Album implements Serializable {
 				earliest = temp;
 			}
 		}
-		System.out.println("earliest date for album " + name + " is " + new Date(earliest));
-		return new Date(earliest);
+		//System.out.println("earliest date for album " + name + " is " + new Date(earliest));
+		//return new Date(earliest);
+		LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(earliest), ZoneId.systemDefault());
+		return date;
 	}
 	
 	/**
 	 * method to obtain latest date of photos in album
 	 * @return Date object containing latest date
 	 */
-	private Date findLatestDate() {
+	private LocalDateTime findLatestDate() {
 		if(photos.size() <= 0) {
 			return null;
 		}
@@ -74,8 +79,10 @@ public class Album implements Serializable {
 				latest = temp;
 			}
 		}
-		System.out.println("latest date for album " + name + " is " + new Date(latest));
-		return new Date(latest);
+		//System.out.println("latest date for album " + name + " is " + new Date(latest));
+		//return new Date(latest);
+		LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(latest), ZoneId.systemDefault());
+		return date;
 	}
 	
 	/**
@@ -106,11 +113,11 @@ public class Album implements Serializable {
 		this.name = name;
 	}
 	
-	public Date getEarliestDate() {
+	public LocalDateTime getEarliestDate() {
 		return earliestDate;
 	}
 	
-	public Date getLatestDate() {
+	public LocalDateTime getLatestDate() {
 		return latestDate;
 	}
 	

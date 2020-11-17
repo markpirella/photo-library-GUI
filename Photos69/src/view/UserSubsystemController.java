@@ -209,7 +209,25 @@ public class UserSubsystemController {
 		}
 	}
 	
-	@FXML private void handleSearchButton(ActionEvent event) {
+	@FXML private void handleSearchButton(ActionEvent event) throws IOException {
+		
+		// **go to PhotoSearch stage
+		Stage stage = new Stage();
+	    stage.setTitle("Search Photos");
+	    FXMLLoader myLoader = new FXMLLoader(getClass().getResource("PhotoSearch.fxml"));
+	    AnchorPane myPane = (AnchorPane) myLoader.load();            
+	    Scene scene = new Scene(myPane);
+	    stage.setScene(scene);
+	    
+	    // grab current stage (in kind of a cheap way, *shrug*) and close it
+	    Stage currStage = (Stage)albumList.getScene().getWindow();
+	    currStage.close();
+	    
+	    PhotoSearchController photoSearchController = myLoader.getController();
+	    photoSearchController.start(stage);
+	    
+	    // finally, switch to new stage
+	    stage.show();
 		
 	}
 	

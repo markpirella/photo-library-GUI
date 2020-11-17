@@ -3,6 +3,9 @@ package model;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.LocalDateTime;
 import java.io.File;
 import java.io.Serializable;
 
@@ -15,14 +18,16 @@ public class Photo implements Serializable {
 	private File imageFile;
 	private String caption;
 	private ArrayList<Tag> tags;
-	private Date date;
+	private LocalDateTime date;
 	
 	public Photo(File imageFile) {
 		//this.filepath = filepath;
 		this.imageFile = imageFile;
 		caption = "";
 		tags = new ArrayList<Tag>(5);
-		date = new Date(imageFile.lastModified());
+		date = LocalDateTime.ofInstant(Instant.ofEpochMilli(imageFile.lastModified()), ZoneId.systemDefault());
+
+		//imageFile.lastModified());
 	}
 	
 	public String getCaption() {
@@ -41,7 +46,7 @@ public class Photo implements Serializable {
 		return imageFile;
 	}
 	
-	public Date getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 	
