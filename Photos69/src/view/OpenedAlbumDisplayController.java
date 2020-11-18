@@ -181,6 +181,12 @@ public class OpenedAlbumDisplayController {
 	 */
 	@FXML private void handleEditCaptionButton(ActionEvent event) {
 		
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("Caption successfully updated!");
+		alert.showAndWait();
+		
 		photosList.getSelectionModel().getSelectedItem().setCaption(captionDisplay.getText());
 		//int index = photosList.getSelectionModel().getSelectedIndex();
 		// ensure caption in listview updates
