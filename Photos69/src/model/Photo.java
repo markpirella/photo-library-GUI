@@ -20,6 +20,10 @@ public class Photo implements Serializable {
 	private ArrayList<Tag> tags;
 	private LocalDateTime date;
 	
+	/**
+	 * constructor to create Photo object
+	 * @param imageFile File object that contains an image file
+	 */
 	public Photo(File imageFile) {
 		//this.filepath = filepath;
 		this.imageFile = imageFile;
@@ -30,26 +34,50 @@ public class Photo implements Serializable {
 		//imageFile.lastModified());
 	}
 	
+	/**
+	 * method to get caption of photo
+	 * @return String that contains caption of photo
+	 */
 	public String getCaption() {
 		return caption;
 	}
 	
+	/**
+	 * method to set caption of photo
+	 * @param caption String to set caption of photo as
+	 */
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
 	
+	/**
+	 * method to get tags of photo
+	 * @return ArrayList of Tag objects containing information on photo tags
+	 */
 	public ArrayList<Tag> getTags(){
 		return tags;
 	}
 	
+	/**
+	 * method to get image file of photo
+	 * @return File object containing image
+	 */
 	public File getImageFile() {
 		return imageFile;
 	}
 	
+	/**
+	 * method to get date photo was taken
+	 * @return Date object containing date photo was taken
+	 */
 	public LocalDateTime getDate() {
 		return date;
 	}
 	
+	/**
+	 * generic toString method for an object
+	 * @return String containing caption of photo
+	 */
 	public String toString() {
 		return caption;
 	}
