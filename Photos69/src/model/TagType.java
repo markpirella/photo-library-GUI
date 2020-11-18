@@ -3,14 +3,26 @@ package model;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+/**
+ * TagType class used to determine whether or not a given tag type can have multiple values associated with it or just one value
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class TagType implements Serializable {
 
 	/**
-	 * 
+	 * auto-generated Serialization value
 	 */
 	private static final long serialVersionUID = 3191242282844726948L;
 	
+	/**
+	 * tag type
+	 */
 	private String type;
+	
+	/**
+	 * true/false value for whether or not type can have multiple values associated with it
+	 */
 	private boolean canHaveMultipleValues;
 	
 	/**

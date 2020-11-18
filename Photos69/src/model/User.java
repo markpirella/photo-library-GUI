@@ -5,14 +5,30 @@ import java.util.ArrayList;
 //import javafx.collections.FXCollections;
 import java.io.Serializable;
 
+/**
+ * User class for any user that can sign into the photo library
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class User implements Serializable {
 	/**
-	 * 
+	 * auto-generated Serialization value
 	 */
 	private static final long serialVersionUID = 1593856730203724865L;
 	
+	/**
+	 * username of the User
+	 */
 	private String username;
+	
+	/**
+	 * collection of Album objects associated with the User
+	 */
 	private ArrayList<Album> albums;
+	
+	/**
+	 * collection of TagType objects associated with the user (tag types that a user creates get saved and tied to that specific user)
+	 */
 	private ArrayList<TagType> tagTypes;
 	
 	/**

@@ -3,12 +3,25 @@ package model;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+/**
+ * Tag class for assigning tags to Photo objects
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class Tag implements Serializable {
 	/**
-	 * 
+	 * auto-generated Serialization value
 	 */
 	private static final long serialVersionUID = 1480471599797664839L;
+	
+	/**
+	 * the type of the tag (e.g. location, person, etc.)
+	 */
 	private String type;
+	
+	/**
+	 * the value of the tag (e.g. New Brunswick, Mark, etc.)
+	 */
 	private String value;
 	
 	/**

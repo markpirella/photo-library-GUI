@@ -9,15 +9,36 @@ import java.time.LocalDateTime;
 import java.io.File;
 import java.io.Serializable;
 
+/**
+ * Photo class used to store images
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class Photo implements Serializable {
 	/**
-	 * 
+	 * auto-generated Serialization value
 	 */
 	private static final long serialVersionUID = 2391064262988040253L;
 	//String filepath;
+	
+	/**
+	 * File object that contains details about image files users add
+	 */
 	private File imageFile;
+	
+	/**
+	 * caption for an image
+	 */
 	private String caption;
+	
+	/**
+	 * collection of Tag objects for an image
+	 */
 	private ArrayList<Tag> tags;
+	
+	/**
+	 * date of the image file
+	 */
 	private LocalDateTime date;
 	
 	/**

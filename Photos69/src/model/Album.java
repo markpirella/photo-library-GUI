@@ -10,14 +10,34 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Album class
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class Album implements Serializable {
 	/**
-	 * 
+	 * auto-generated Serialization value
 	 */
 	private static final long serialVersionUID = -6482233240369102096L;
+	/**
+	 * name of the album
+	 */
 	private String name;
+	
+	/**
+	 * collection of Photo objects in the Album
+	 */
 	private ArrayList<Photo> photos;
+	
+	/**
+	 * earliest date of image file contained in album
+	 */
 	private LocalDateTime earliestDate;
+	
+	/**
+	 * latest date of image file contained in album
+	 */
 	private LocalDateTime latestDate;
 	
 	/**
