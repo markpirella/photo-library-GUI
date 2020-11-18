@@ -124,6 +124,8 @@ public class OpenedAlbumDisplayController {
 		for(int i = 0; i < observablePhotos.size(); i++) {
 			Image image = null;
 			try {
+				//String cwd = System. getProperty("user.dir");
+                //System.out.println(new File(cwd).toURI().relativize(file.toURI()).getPath());
 				image = new Image(observablePhotos.get(i).getImageFile().toURI().toURL().toExternalForm());
 			}catch(Exception e) {
 				
@@ -246,7 +248,11 @@ public class OpenedAlbumDisplayController {
 			return;
 		}
 		
-		Photo newPhoto = new Photo(selectedFile);
+		String cwd = System. getProperty("user.dir");
+		String pathToAdd = new File(cwd).toURI().relativize(selectedFile.toURI()).getPath();
+        //System.out.println(new File(cwd).toURI().relativize(file.toURI()).getPath());
+		File fileToAdd = new File(pathToAdd);
+		Photo newPhoto = new Photo(fileToAdd);
 		
 		// check if photo is a duplicate of existing photo in album
 		for(Photo p : openedAlbum.getPhotos()) {
