@@ -31,6 +31,11 @@ import model.Tag;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * controller for OpenedAlbumDisplay.fxml
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class OpenedAlbumDisplayController {
 	
 	@FXML ListView<Photo> photosList;
@@ -47,6 +52,11 @@ public class OpenedAlbumDisplayController {
 	ObservableList<Album> observableAlbums;
 	ObservableList<Tag> observableTags;
 	
+	/**
+	 * method to be called when switching to OpenedAlbumDisplay stage
+	 * @param mainStage contains OpenedAlbumDisplay stage
+	 * @param openedAlbum Album object of currently opened album
+	 */
 	public void start(Stage mainStage, Album openedAlbum) {
 		//openedAlbum.setEarliestAndLatestDates();
 		currentStage = mainStage;
@@ -112,6 +122,10 @@ public class OpenedAlbumDisplayController {
 		}
 	}
 	
+	/**
+	 * method to handle caption create/edit button (edits currently existing caption to what user inputs)
+	 * @param event caption create/edit button pressed
+	 */
 	@FXML private void handleEditCaptionButton(ActionEvent event) {
 		
 		photosList.getSelectionModel().getSelectedItem().setCaption(captionDisplay.getText());
@@ -128,6 +142,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle previous photo button (select previous photo in album)
+	 * @param event previous photo button pressed
+	 */
 	@FXML private void handlePreviousPhotoButton(ActionEvent event) {
 		
 		int index = photosList.getSelectionModel().getSelectedIndex()-1;
@@ -137,6 +155,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle next photo button pressed (select next photo in album)
+	 * @param event next photo button pressed
+	 */
 	@FXML private void handleNextPhotoButton(ActionEvent event) {
 		
 		int index = photosList.getSelectionModel().getSelectedIndex()+1;
@@ -146,6 +168,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle add photo button pressed (add new File object for picture to album)
+	 * @param event add photo button pressed
+	 */
 	@FXML private void handleAddPhotoButton(ActionEvent event) {
 		
 		FileChooser fileChooser = new FileChooser();
@@ -201,6 +227,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle delete photo button pressed (remove File object from Album)
+	 * @param event delete photo button pressed
+	 */
 	@FXML private void handleDeletePhotoButton(ActionEvent event) {
 		int index = photosList.getSelectionModel().getSelectedIndex();
 		
@@ -228,6 +258,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle copy photo to another album button
+	 * @param event copy photo to another album button pressed
+	 */
 	@FXML private void handleCopyPhotoButton(ActionEvent event) {
 		
 		// ensure user made a selection
@@ -245,6 +279,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle move photo to another album button
+	 * @param event move photo to another album button
+	 */
 	@FXML private void handleMovePhotoButton(ActionEvent event) {
 		
 		// ensure user made a selection
@@ -277,6 +315,11 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle back button pressed (go back to UserSubsystem stage)
+	 * @param event back button pressed
+	 * @throws IOException if accessing UserSubsystem.fxml fails
+	 */
 	@FXML private void handleBackButton(ActionEvent event) throws IOException {
 		
 		// **go to UserSubsystem stage
@@ -299,6 +342,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle Quit button being pressed (exit application)
+	 * @param event Quit button pressed
+	 */
 	@FXML private void handleQuitButton(ActionEvent event) {
 		
 		try {
@@ -310,6 +357,11 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle Add Tag button being pressed (switch to AddNewTag stage)
+	 * @param event Add Tag button pressed
+	 * @throws IOException if accessing AddNewTag.fxml fails
+	 */
 	@FXML private void handleAddTagButton(ActionEvent event) throws IOException {
 		
 		// **go to AddTag stage
@@ -328,6 +380,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * method to handle Delete Tag button pressed (remove Tag object from currently selected Photo object)
+	 * @param event Delete Tag button pressed
+	 */
 	@FXML private void handleDeleteTagButton(ActionEvent event) {
 		
 		photosList.getSelectionModel().getSelectedItem().getTags().remove(tagsList.getSelectionModel().getSelectedItem());
@@ -335,6 +391,10 @@ public class OpenedAlbumDisplayController {
 		
 	}
 	
+	/**
+	 * display currently selected Photo details
+	 * @param makeEverythingEmpty if true, set all displays to null/empty
+	 */
 	private void displayPhotoDetails(boolean makeEverythingEmpty) {
 		if(photosList.getSelectionModel().getSelectedIndex() < 0 || photosList.getSelectionModel().getSelectedIndex() >= observablePhotos.size()) {
 			photoDisplay.setImage(null);
@@ -370,6 +430,11 @@ public class OpenedAlbumDisplayController {
 		}
 	}
 	
+	/**
+	 * method to obtain corresponding Image object for currently selected Photo object
+	 * @param photo currently selected Photo object
+	 * @return corresponding Image object
+	 */
 	private Image getImageForPhoto(Photo photo) {
 		for(int i = 0; i < observablePhotos.size(); i++) {
 			if(photo == observablePhotos.get(i)) {

@@ -19,6 +19,11 @@ import javafx.scene.Scene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * controller for LoginScreen.fxml
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class LoginScreenController { //implements Serializable {
 	/**
 	 * 
@@ -77,6 +82,11 @@ public class LoginScreenController { //implements Serializable {
 		
 	//}
 	
+	/**
+	 * method to handle Submit button press (either log user in, go to admin subsystem, or alert that user doesn't exist)
+	 * @param event Submit button pressed
+	 * @throws IOException if <<username>>.dat file can't be opened
+	 */
 	@FXML private void handleSubmitButton(ActionEvent event) throws IOException {
 		
 		// user submits "admin"
@@ -138,6 +148,10 @@ public class LoginScreenController { //implements Serializable {
 		
 	}
 	
+	/**
+	 * method to handle Quit button pressed (exit application)
+	 * @param event Quit button pressed
+	 */
 	@FXML private void handleQuitButton(ActionEvent event) {
 		System.exit(0);
 	}
