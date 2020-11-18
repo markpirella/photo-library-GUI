@@ -31,6 +31,11 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.io.IOException;
 
+/**
+ * controller for PhotoSearch.fxml
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class PhotoSearchController {
 	
 	@FXML TextField startDate, endDate, firstTagValue, secondTagValue, newAlbumName, dateDisplay;
@@ -51,6 +56,10 @@ public class PhotoSearchController {
 	ArrayList<Tag> garbage;
 	boolean execute;
 	
+	/**
+	 * method to be called when switching to PhotoSearch stage
+	 * @param mainStage PhotoSearch Stage object
+	 */
 	public void start(Stage mainStage) {
 		
 		currentUser = Photos.programSession.getCurrentUser();
@@ -106,6 +115,10 @@ public class PhotoSearchController {
 		
 	}
 	
+	/**
+	 * method to handle Submit button for searching by date
+	 * @param event search by date Submit button pressed
+	 */
 	@FXML private void handleSearchByDateButton(ActionEvent event) {
 		
 		if(startDate.getText().equals("") && endDate.getText().equals("")) { // both dates empty -> show error
@@ -198,6 +211,10 @@ public class PhotoSearchController {
 		
 	}
 	
+	/**
+	 * method to handle Previous button pressed (select previous photo in list)
+	 * @param event Previous button pressed
+	 */
 	@FXML private void handlePreviousPhotoButton(ActionEvent event) {
 		
 		int index = searchResults.getSelectionModel().getSelectedIndex()-1;
@@ -207,6 +224,10 @@ public class PhotoSearchController {
 		
 	}
 	
+	/**
+	 * method to handle Next button pressed (select next photo in list)
+	 * @param event Next button pressed
+	 */
 	@FXML private void handleNextPhotoButton(ActionEvent event) {
 		
 		int index = searchResults.getSelectionModel().getSelectedIndex()+1;
@@ -216,6 +237,11 @@ public class PhotoSearchController {
 		
 	}
 	
+	/**
+	 * method to handle Back button pressed (go to UserSubsystem Stage)
+	 * @param event Back button pressed
+	 * @throws IOException if accessing UserSubsystem.fxml fails
+	 */
 	@FXML private void handleBackButton(ActionEvent event) throws IOException {
 		
 		// **go to UserSubsystem stage
@@ -238,6 +264,10 @@ public class PhotoSearchController {
 		
 	}
 	
+	/**
+	 * method to handle Quit button pressed (exit application)
+	 * @param event Quit button pressed
+	 */
 	@FXML private void handleQuitButton(ActionEvent event) {
 		
 		try {
@@ -249,6 +279,10 @@ public class PhotoSearchController {
 		
 	}
 	
+	/**
+	 * method to handle Submit button for searching by tag
+	 * @param event Submit button for searching by tag pressed
+	 */
 	@FXML private void handleSearchByTagButton(ActionEvent event) {
 		
 		if(operation.getValue() == null) { // operation not specified
@@ -451,6 +485,10 @@ public class PhotoSearchController {
 		
 	}
 	
+	/**
+	 * method to handle Create New Album button
+	 * @param event Create New Album button pressed
+	 */
 	@FXML private void handleCreateAlbumButton(ActionEvent event) {
 		
 		if(newAlbumName.getText().equals("")) { // operation not specified
@@ -526,6 +564,7 @@ public class PhotoSearchController {
 		newAlbumName.setText("");
 	}
 	
+	/*
 	private void loadImages() {
 		loadedImages = new ArrayList<Image>();
 		for(int i = 0; i < observablePhotos.size(); i++) {
@@ -538,7 +577,13 @@ public class PhotoSearchController {
 			loadedImages.add(image);
 		}
 	}
+	*/
 	
+	/**
+	 * method to load in corresponding Image object for currently selected Photo object
+	 * @param photo currently selected Photo object
+	 * @return corresponding Image object
+	 */
 	private Image getImageForPhoto(Photo photo) {
 		for(int i = 0; i < observablePhotos.size(); i++) {
 			if(photo == observablePhotos.get(i)) {
@@ -548,6 +593,10 @@ public class PhotoSearchController {
 		return null;
 	}
 	
+	/**
+	 * method to display all details of currently selected Photo object
+	 * @param makeEverythingEmpty true if want to set all displays to null/empty
+	 */
 	private void displayPhotoDetails(boolean makeEverythingEmpty) {
 		//System.out.println("DISPLAY PHOTO DETAILS CALLED");
 		if(!execute) {

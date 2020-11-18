@@ -23,6 +23,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * controller for UserSubsystem Stage
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class UserSubsystemController {
 	
 	@FXML ListView<Album> albumList;
@@ -31,6 +36,10 @@ public class UserSubsystemController {
 	ArrayList<Album> albums;
 	ObservableList<Album> observableAlbums;
 
+	/**
+	 * method to be called when switching to UserSubsystem Stage
+	 * @param mainStage UserSubsystem Stage
+	 */
 	public void start(Stage mainStage) {
 		//Photos.programSession.setCurrentUser(read);
 		albums = Photos.programSession.getCurrentUser().getAlbums();
@@ -52,6 +61,11 @@ public class UserSubsystemController {
 		});
 	}
 	
+	/**
+	 * method to handle Open button pressed (switches to OpenedAlbumDisplay Stage)
+	 * @param event Open button pressed
+	 * @throws IOException if accessing OpenedAlbumDisplay.fxml fails
+	 */
 	@FXML private void handleOpenButton(ActionEvent event) throws IOException {
 		
 		if(albumList.getSelectionModel().getSelectedIndex() < 0 || albumList.getSelectionModel().getSelectedIndex() >= observableAlbums.size()) {
@@ -78,7 +92,11 @@ public class UserSubsystemController {
 		
 	}
 	
-	@FXML private void handleAddButton(ActionEvent event) throws IOException {
+	/**
+	 * method to handle Add button (creates a new Album object for user)
+	 * @param event Add button pressed
+	 */
+	@FXML private void handleAddButton(ActionEvent event) {
 		
 		// check for duplicate album name for this user
 		for(Album a : albums) {
@@ -124,7 +142,11 @@ public class UserSubsystemController {
 		*/
 	}
 	
-	@FXML private void handleEditButton(ActionEvent event) throws IOException{
+	/**
+	 * method to handle Edit Album Name button pressed
+	 * @param event Edit Album Name button pressed
+	 */
+	@FXML private void handleEditButton(ActionEvent event) {
 		
 		if(observableAlbums.size() <= 0) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -197,6 +219,10 @@ public class UserSubsystemController {
 	    */
 	}
 	
+	/**
+	 * method to handle Delete Album button being pressed 
+	 * @param event Delete button pressed
+	 */
 	@FXML private void handleDeleteButton(ActionEvent event) {
 		int index = albumList.getSelectionModel().getSelectedIndex();
 		
@@ -222,6 +248,11 @@ public class UserSubsystemController {
 		}
 	}
 	
+	/**
+	 * method to handle Search Photos button being pressed (go to PhotoSearch Stage)
+	 * @param event Search Photos button pressed
+	 * @throws IOException if accessing PhotoSearch.fxml fails
+	 */
 	@FXML private void handleSearchButton(ActionEvent event) throws IOException {
 		
 		// **go to PhotoSearch stage
@@ -244,6 +275,11 @@ public class UserSubsystemController {
 		
 	}
 	
+	/**
+	 * method to handle Logout button being pressed (go to LoginScreen Stage)
+	 * @param event Logout button pressed
+	 * @throws IOException if accessing LoginScreen.fxml fails
+	 */
 	@FXML private void handleLogoutButton(ActionEvent event) throws IOException {
 		
 		Stage stage = new Stage();
@@ -267,6 +303,10 @@ public class UserSubsystemController {
 		
 	}
 	
+	/**
+	 * method to handle Quit button being pressed
+	 * @param event Quit button pressed
+	 */
 	@FXML private void handleQuitButton(ActionEvent event) {
 		
 		try {
@@ -278,6 +318,9 @@ public class UserSubsystemController {
 		
 	}
 	
+	/**
+	 * method to display details of currently selected Album
+	 */
 	private void displayAlbumDetails() {
 		if(albumList.getSelectionModel().getSelectedIndex() >= 0) {
 			Album current = albumList.getSelectionModel().getSelectedItem();
