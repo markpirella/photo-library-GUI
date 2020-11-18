@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -28,6 +29,7 @@ import model.Album;
 import model.Photo;
 import model.Tag;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class OpenedAlbumDisplayController {
 	
@@ -168,6 +170,19 @@ public class OpenedAlbumDisplayController {
 		}
 		
 		Photo newPhoto = new Photo(selectedFile);
+		
+		// check if photo is a duplicate of existing photo in album
+		for(Photo p : openedAlbum.getPhotos()) {
+			if(p.getImageFile().getAbsolutePath().equals(newPhoto.getImageFile().getAbsolutePath())) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Error");
+				alert.setHeaderText("This photo already exists in this album");
+				alert.setContentText("Please try again with a different photo.");
+				alert.showAndWait();
+				return;
+			}
+		}
+		
 		// add preloaded image to loadedImages
 		Image image = null;
 		try {
@@ -188,6 +203,17 @@ public class OpenedAlbumDisplayController {
 	
 	@FXML private void handleDeletePhotoButton(ActionEvent event) {
 		int index = photosList.getSelectionModel().getSelectedIndex();
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Confirmation needed!");
+		alert.setContentText("Are you sure you want to delete this photo from the album?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (!(result.get() == ButtonType.OK)){ // user did not press ok
+			return;
+		}
+		
 		if(index >= 0) {
 			observablePhotos.remove(index);
 			openedAlbum.removePhoto(index);

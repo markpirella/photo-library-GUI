@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class UserSubsystemController {
 	
@@ -197,6 +199,17 @@ public class UserSubsystemController {
 	
 	@FXML private void handleDeleteButton(ActionEvent event) {
 		int index = albumList.getSelectionModel().getSelectedIndex();
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Confirmation needed!");
+		alert.setContentText("Are you sure you want to delete album '" + observableAlbums.get(index)+"'?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (!(result.get() == ButtonType.OK)){ // user did not press ok
+			return;
+		}
+		
 		if(index >= 0) {
 			observableAlbums.remove(index);
 			albums.remove(index);

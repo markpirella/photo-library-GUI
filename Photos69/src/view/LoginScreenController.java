@@ -110,7 +110,7 @@ public class LoginScreenController implements Serializable {
 				alert.showAndWait();
 			}else { // username found
 				try {
-					System.out.println("username found: " +inputUsername.getText());
+					//System.out.println("username found: " +inputUsername.getText());
 					Photos.setCurrentUserWithUsername(inputUsername.getText());
 				}catch(Exception e) {
 					e.printStackTrace();
