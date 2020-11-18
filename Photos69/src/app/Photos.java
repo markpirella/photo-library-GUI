@@ -110,7 +110,7 @@ public class Photos extends Application {
 	    AnchorPane myPane = (AnchorPane) myLoader.load();            
 	    Scene scene = new Scene(myPane);
 	    stage.setScene(scene);
-	    stage.show();  
+	    stage.show();
 	}
 
 	public static void main(String[] args) {
