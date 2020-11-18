@@ -67,8 +67,8 @@ public class Photos extends Application {
 	/**
 	 * sets the value of currentUser in Program instance based on given username
 	 * @param username user to set as currentUser
-	 * @throws IOException if <<username>>.dat file is not found
-	 * @throws ClassNotFoundException if <<username>>.dat file becomes corrupted and does not appear as a User object
+	 * @throws IOException if "username".dat file is not found
+	 * @throws ClassNotFoundException if "username".dat file becomes corrupted and does not appear as a User object
 	 */
 	public static void setCurrentUserWithUsername(String username) throws IOException, ClassNotFoundException {
 		//System.out.println("got to setCurrentUserWithUsername function");
@@ -87,9 +87,9 @@ public class Photos extends Application {
 	/**
 	 * method used to read a User object from disk
 	 * @param username User for which to read from disk
-	 * @return
-	 * @throws IOException if <<username>>.dat file cant be found
-	 * @throws ClassNotFoundException if <<username>>.dat file becomes corrupted and does not appear as User object
+	 * @return User object read from disk
+	 * @throws IOException if "username".dat file cant be found
+	 * @throws ClassNotFoundException if "username".dat file becomes corrupted and does not appear as User object
 	 */
 	public static User readUserObj(String username) throws IOException, ClassNotFoundException {
 		//System.out.println("reached writeprogramobj function");
@@ -103,7 +103,7 @@ public class Photos extends Application {
 	/**
 	 * method to write currentUser info to disk when exiting application
 	 * @param userObj User object to write to disk
-	 * @throws IOException if <<username>>.dat cannot be written to by ObjectOutputStream
+	 * @throws IOException if "username".dat cannot be written to by ObjectOutputStream
 	 */
 	public static void writeUserObj(User userObj) throws IOException {
 		//System.out.println("reached writeprogramobj function");

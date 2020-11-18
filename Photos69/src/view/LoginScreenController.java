@@ -35,7 +35,7 @@ public class LoginScreenController {
 	/**
 	 * method to handle Submit button press (either log user in, go to admin subsystem, or alert that user doesn't exist)
 	 * @param event Submit button pressed
-	 * @throws IOException if <<username>>.dat file can't be opened
+	 * @throws IOException if "username".dat file can't be opened
 	 */
 	@FXML private void handleSubmitButton(ActionEvent event) throws IOException {
 		

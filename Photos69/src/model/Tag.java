@@ -69,6 +69,7 @@ public class Tag implements Serializable {
 	/**
 	 * method to check if a tag has the same type and value as another tag
 	 * @return Boolean value if the tags have the same type and value (true) or not (false)
+	 * @param otherTag Tag to compare to
 	 */
 	public boolean equals(Tag otherTag) {
 		return otherTag.getType() == this.type && otherTag.getValue() == this.value;

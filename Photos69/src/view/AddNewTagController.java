@@ -79,8 +79,8 @@ public class AddNewTagController {
 	 * method to be called when switching to AddNewTag stage
 	 * @param mainStage contains AddNewTag stage
 	 * @param openedPhoto Photo object to add tag to
-	 * @param observableTags ObservableList<Tag> of photo's tags
-	 * @param tagsListOnPrevStage ListView<Tag> of photo's tags on OpenedAlbumDisplay stage
+	 * @param observableTags ObservableList of photo's tags
+	 * @param tagsListOnPrevStage ListView of photo's tags on OpenedAlbumDisplay stage
 	 */
 	public void start(Stage mainStage, Photo openedPhoto, ObservableList<Tag> observableTags, ListView<Tag> tagsListOnPrevStage) {
 		
