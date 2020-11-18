@@ -46,15 +46,15 @@ public class Photos extends Application {
 	}
 	
 	public static void setCurrentUserWithUsername(String username) throws IOException, ClassNotFoundException {
-		System.out.println("got to setCurrentUserWithUsername function");
+		//System.out.println("got to setCurrentUserWithUsername function");
 		if(username == null) {
 			programSession.setCurrentUser(null);
 			return;
 		}
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(username+".dat"));
-		System.out.println("grabbed ois");
+		//System.out.println("grabbed ois");
 		programSession.setCurrentUser((User)ois.readObject());
-		System.out.println("made currentUser object");
+		//System.out.println("made currentUser object");
 		ois.close();
 		//System.out.println("success! grabbed user object with username: " + currentUser.getUsername());
 	}
@@ -85,7 +85,7 @@ public class Photos extends Application {
 			programSession = readProgramObj(); // will read in Program.dat file if it exists
 			//System.out.println("usernames list: " + programSession.getUsernames().get(0));
 		}catch(Exception e) {
-			System.out.println("did not find Program.dat");
+			//System.out.println("did not find Program.dat");
 			// if Program.dat does not exist then just continue on - this is first time program has been run, so Program object 
 			// (importantly containing ArrayList of usernames) will be written to a new file once execution ends
 		}
