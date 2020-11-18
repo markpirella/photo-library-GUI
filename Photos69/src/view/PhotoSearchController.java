@@ -97,7 +97,7 @@ public class PhotoSearchController {
 			}
 		});
 		
-		boolean execute = true;
+		execute = true;
 		garbage = new ArrayList<Tag>();
 		observableTags = FXCollections.observableArrayList(garbage);
 		
@@ -146,8 +146,8 @@ public class PhotoSearchController {
 			return;
 		}
 		
-		searchResultsArrayList = new ArrayList<Photo>();
-		loadedImages = new ArrayList<Image>();
+		ArrayList<Photo> newSearchResultsArrayList = new ArrayList<Photo>();
+		ArrayList<Image> newLoadedImages = new ArrayList<Image>();
 		
 		// got start and end dates, now traverse through all albums and find all photos that fit requirements
 		for(int i = 0; i < currentUser.getAlbums().size(); i++) { // traverse all of user's albums
@@ -156,18 +156,30 @@ public class PhotoSearchController {
 				Photo photo = album.getPhotos().get(j);
 				if(photo.getDate().compareTo(startDateTime) > 0 
 						&& photo.getDate().compareTo(endDateTime) < 0
-						&& searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
-					searchResultsArrayList.add(photo);
+						&& newSearchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+					newSearchResultsArrayList.add(photo);
 					Image image = null;
 					try {
 						image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
 					}catch(Exception e) {
 						
 					}
-					loadedImages.add(image);
+					newLoadedImages.add(image);
 				}
 			}
 		}
+		
+		if(newSearchResultsArrayList.size() < 1) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText("No results found.");
+			alert.showAndWait();
+			return;
+		}
+		
+		searchResultsArrayList = newSearchResultsArrayList;
+		loadedImages = newLoadedImages;
 		
 		observablePhotos = FXCollections.observableArrayList(searchResultsArrayList);
 		execute = false;
@@ -271,8 +283,8 @@ public class PhotoSearchController {
 		
 		Tag tag1 = null;
 		Tag tag2 = null;
-		searchResultsArrayList = new ArrayList<Photo>();
-		loadedImages = new ArrayList<Image>();
+		ArrayList<Photo> newSearchResultsArrayList = new ArrayList<Photo>();
+		ArrayList<Image> newLoadedImages = new ArrayList<Image>();
 		
 		// now grab tag values and search with them
 		if(operation.getValue().equals("AND")) { // grab both tags
@@ -298,15 +310,15 @@ public class PhotoSearchController {
 					}
 					if(index1 != -1 && // found first tag
 							index2 != -1 && // found second tag
-							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
-						searchResultsArrayList.add(photo);
+							newSearchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						newSearchResultsArrayList.add(photo);
 						Image image = null;
 						try {
 							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
 						}catch(Exception e) {
 							
 						}
-						loadedImages.add(image);
+						newLoadedImages.add(image);
 					}
 				}
 			}
@@ -333,15 +345,15 @@ public class PhotoSearchController {
 					}
 					if((index1 != -1 || // found first tag
 							index2 != -1) && // found second tag
-							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
-						searchResultsArrayList.add(photo);
+							newSearchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						newSearchResultsArrayList.add(photo);
 						Image image = null;
 						try {
 							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
 						}catch(Exception e) {
 							
 						}
-						loadedImages.add(image);
+						newLoadedImages.add(image);
 					}
 				}
 			}
@@ -362,15 +374,15 @@ public class PhotoSearchController {
 						}
 					}
 					if(index != -1 && // found first tag
-							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
-						searchResultsArrayList.add(photo);
+							newSearchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						newSearchResultsArrayList.add(photo);
 						Image image = null;
 						try {
 							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
 						}catch(Exception e) {
 							
 						}
-						loadedImages.add(image);
+						newLoadedImages.add(image);
 					}
 				}
 			}
@@ -389,27 +401,31 @@ public class PhotoSearchController {
 						}
 					}
 					if(index != -1 && // found second tag
-							searchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
-						searchResultsArrayList.add(photo);
+							newSearchResultsArrayList.indexOf(photo) < 0) { // falls in date range and isnt already in search results
+						newSearchResultsArrayList.add(photo);
 						Image image = null;
 						try {
 							image = new Image(photo.getImageFile().toURI().toURL().toExternalForm());
 						}catch(Exception e) {
 							
 						}
-						loadedImages.add(image);
+						newLoadedImages.add(image);
 					}
 				}
 			}
 		}
 		
-		if(searchResultsArrayList.size() < 1) {
+		if(newSearchResultsArrayList.size() < 1) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText(null);
 			alert.setContentText("No results found.");
 			alert.showAndWait();
+			return;
 		}
+		
+		searchResultsArrayList = newSearchResultsArrayList;
+		loadedImages = newLoadedImages;
 		
 		// display results
 		observablePhotos = FXCollections.observableArrayList(searchResultsArrayList);
