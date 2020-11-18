@@ -19,7 +19,7 @@ import javafx.scene.Scene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class LoginScreenController implements Serializable {
+public class LoginScreenController { //implements Serializable {
 	/**
 	 * 
 	 */
