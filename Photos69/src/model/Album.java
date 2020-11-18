@@ -95,37 +95,68 @@ public class Album implements Serializable {
 		latestDate = findLatestDate();
 	}
 	
+	/**
+	 * method to remove photo from album, ensures that if photo was earliest or latest date, this field will be updated
+	 * @param index Index number of photo in photos ArrayList
+	 */
 	public void removePhoto(int index) {
 		photos.remove(index);
 		earliestDate = findEarliestDate();
 		latestDate = findLatestDate();
 	}
 	
+	/**
+	 * method to get all photos
+	 * @return ArrayList of photo objects containing all photos in the album
+	 */
 	public ArrayList<Photo> getPhotos(){
 		return photos;
 	}
 	
+	/**
+	 * method to get name of album
+	 * @return String containing album name
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * method to set name of album
+	 * @param name String to set album name field as
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * method to get the earliest date that a photo was taken in the album
+	 * @return Date object that contains earliest date
+	 */
 	public LocalDateTime getEarliestDate() {
 		return earliestDate;
 	}
 	
+	/**
+	 * method to get latest date that a photo was taken in the album
+	 * @return Date object that contains latest date
+	 */
 	public LocalDateTime getLatestDate() {
 		return latestDate;
 	}
 	
+	/**
+	 * method to set earliest and latest dates that a photo was taken in the album
+	 */
 	public void setEarliestAndLatestDates() {
 		earliestDate = findEarliestDate();
 		latestDate = findLatestDate();
 	}
 	
+	/**
+	 * generic toString method for an object
+	 * @return String that contains the name of the album
+	 */
 	public String toString() {
 		return name;
 	}

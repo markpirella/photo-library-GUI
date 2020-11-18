@@ -34,6 +34,13 @@ public class AddNewTagController {
 	ObservableList<Tag> observableTagsOnPreviousStage;
 	Photo currentPhoto;
 	
+	/**
+	 * method to get type of TagType
+	 * @param mainStage 
+	 * @param openedPhoto Photo object 
+	 * @param observableTags
+	 * @param tagsListOnPrevStage
+	 */
 	public void start(Stage mainStage, Photo openedPhoto, ObservableList<Tag> observableTags, ListView<Tag> tagsListOnPrevStage) {
 		
 		currentPhoto = openedPhoto;
@@ -49,6 +56,9 @@ public class AddNewTagController {
 		
 	}
 	
+	/*
+	 * method
+	 */
 	@FXML private void handleExistingTagConfirmButton(ActionEvent event) {
 		
 		if(existingTagTypesList.getValue() == null) {
@@ -159,6 +169,10 @@ public class AddNewTagController {
 		
 	}
 	
+	/**
+	 * method to get type of TagType
+	 * @param event 
+	 */
 	@FXML private void handleNewTagConfirmButton(ActionEvent event) {
 		
 		if(inputNewTagType.getText().equals("")) {

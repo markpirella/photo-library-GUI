@@ -26,6 +26,10 @@ public class Photos extends Application {
 	
 	//public static User currentUser;
 	
+	/**
+	 * method 
+	 * @param programObj 
+	 */
 	public static void writeProgramObj(Program programObj) throws IOException {
 		// set currentUser to null to preserve disk space, currentUser data will be stored elsewhere
 		programObj.setCurrentUser(null);
@@ -37,6 +41,10 @@ public class Photos extends Application {
 		oos.close();
 	}
 	
+	/**
+	 * method 
+	 * @return Program object
+	 */
 	public static Program readProgramObj() throws IOException, ClassNotFoundException {
 		//ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeFile));
@@ -45,6 +53,10 @@ public class Photos extends Application {
 		return programObj;
 	}
 	
+	/**
+	 * method 
+	 * @param programObj 
+	 */
 	public static void setCurrentUserWithUsername(String username) throws IOException, ClassNotFoundException {
 		//System.out.println("got to setCurrentUserWithUsername function");
 		if(username == null) {
