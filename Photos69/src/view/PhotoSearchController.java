@@ -38,22 +38,114 @@ import java.io.IOException;
  */
 public class PhotoSearchController {
 	
-	@FXML TextField startDate, endDate, firstTagValue, secondTagValue, newAlbumName, dateDisplay;
+	/**
+	 * user inputs desired start date of search here
+	 */
+	@FXML TextField startDate;
+	
+	/**
+	 * user inputs desired end date of search here
+	 */
+	@FXML TextField endDate;
+	
+	/**
+	 * user inputs value of first tag to search with here
+	 */
+	@FXML TextField firstTagValue;
+	
+	/**
+	 * user inputs value of second tag to search with here (if applicable)
+	 */
+	@FXML TextField secondTagValue;
+	
+	/**
+	 * user puts name of new Album object to create from search results here
+	 */
+	@FXML TextField newAlbumName;
+	
+	/**
+	 * displays date of currently selected Photo
+	 */
+	@FXML TextField dateDisplay;
+	
+	/**
+	 * displays caption of currently selected Photo
+	 */
 	@FXML TextArea captionDisplay;
-	@FXML ComboBox<TagType> firstTagType, secondTagType;
+	
+	/**
+	 * used to display tag type options for first tag to search with
+	 */
+	@FXML ComboBox<TagType> firstTagType;
+	
+	/**
+	 * used to display tag type options for second tag to search with
+	 */
+	@FXML ComboBox<TagType> secondTagType;
+	
+	/**
+	 * used to display options for search criteria (AND, OR, Only first tag, Only second tag)
+	 */
 	@FXML ChoiceBox<String> operation;
+	
+	/**
+	 * used to display results from user's search
+	 */
 	@FXML ListView<Photo> searchResults;
+	
+	/**
+	 * used to display tags of currently selected Photo
+	 */
 	@FXML ListView<Tag> tagsList;
+	
+	/**
+	 * used to display Image of currently selected Photo
+	 */
 	@FXML ImageView photoDisplay;
 	
+	/**
+	 * used to help display list of existing tag types for user to choose from
+	 */
 	ObservableList<TagType> observableExistingTagTypes;
+	
+	/**
+	 * used to hold User object of user currently signed in
+	 */
 	User currentUser;
+	
+	/**
+	 * used to help list Photos that matched search criteria
+	 */
 	ObservableList<Photo> observablePhotos;
+	
+	/**
+	 * used to help store Image objects for corresponding Photos
+	 */
 	ArrayList<Image> loadedImages;
+	
+	/**
+	 * used to help store Photos that fit search criteria
+	 */
 	ArrayList<Photo> searchResultsArrayList;
+	
+	/**
+	 * used to help display Tags of currently selected Photo
+	 */
 	ObservableList<Tag> observableTags;
+	
+	/**
+	 * used to store Tags of currently selected Photo
+	 */
 	ArrayList<Tag> tagsArrayList;
+	
+	/**
+	 * used to help initialize Tags ArrayList
+	 */
 	ArrayList<Tag> garbage;
+	
+	/**
+	 * used to determine if DisplayPhotoDetails() should be run or not, based on if searchResultsArrayList is empty or not (causes problems otherwise)
+	 */
 	boolean execute;
 	
 	/**

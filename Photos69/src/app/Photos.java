@@ -3,7 +3,7 @@ package app;
 import model.Program;
 import model.User;
 
-import java.io.File;
+//import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import view.LoginScreenController;
+//import view.LoginScreenController;
 
 /**
  * This is the Photos class which will be run in order to execute the photo library program

@@ -19,7 +19,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.File;
+//import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -30,10 +30,44 @@ import java.util.Optional;
  */
 public class UserSubsystemController {
 	
+	/**
+	 * used to display existing Album objects
+	 */
 	@FXML ListView<Album> albumList;
-	@FXML TextField earliestDateDisplay, latestDateDisplay, numberOfPhotosDisplay, inputNewAlbumName, inputAlbumRename;
 	
+	/**
+	 * used to display earliest date of image file present in currently selected album
+	 */
+	@FXML TextField earliestDateDisplay;
+	
+	/**
+	 * used to display latest date of image file present in currently selected album
+	 */
+	@FXML TextField latestDateDisplay;
+	
+	/**
+	 * used to display number of Photo objects in currently selected album
+	 */
+	@FXML TextField numberOfPhotosDisplay;
+	
+	/**
+	 * user inputs desired new album name here
+	 */
+	@FXML TextField inputNewAlbumName;
+	
+	/**
+	 * user edits album name of currently selected album here
+	 */
+	@FXML TextField inputAlbumRename;
+	
+	/**
+	 * used to store all Album objects that belong to the current user
+	 */
 	ArrayList<Album> albums;
+	
+	/**
+	 * used to help display all Album objects that belong to the current user
+	 */
 	ObservableList<Album> observableAlbums;
 
 	/**

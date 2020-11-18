@@ -14,12 +14,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+//import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.ImageView;
+//import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.Album;
+//import model.Album;
 import model.Photo;
 import model.Tag;
 
@@ -30,12 +30,44 @@ import model.Tag;
  */
 public class AddNewTagController {
 	
-	@FXML TextField inputExistingTagValue, inputNewTagType, inputNewTagValue;
+	/**
+	 * user inputs value of existing tag type here
+	 */
+	@FXML TextField inputExistingTagValue;
+	
+	/**
+	 * user inputs new tag type here
+	 */
+	@FXML TextField inputNewTagType;
+	
+	/**
+	 * user inputs value of tag with new tag type here
+	 */
+	@FXML TextField inputNewTagValue;
+	
+	/**
+	 * ComboBox for picking an existing tag type
+	 */
 	@FXML ComboBox<TagType> existingTagTypesList;
+	
+	/**
+	 * ChoiceBox for picking if new tag type can have multiple values associated with it
+	 */
 	@FXML ChoiceBox<String> singleOrMultipleChoice;
+	
+	/**
+	 * ListView displaying tags on OpenedAlbumDisplay stage
+	 */
 	@FXML ListView<Tag> tagsListOnPreviousStage;
 	
+	/**
+	 * ObservableList to display existing tag types
+	 */
 	ObservableList<TagType> observableExistingTagTypes;
+	
+	/**
+	 * ObservableList to alter tags displayed on OpenedAlbumDisplay stage
+	 */
 	ObservableList<Tag> observableTagsOnPreviousStage;
 	
 	/**

@@ -2,7 +2,7 @@ package view;
 
 import java.io.File;
 
-import javax.imageio.ImageIO;
+//import javax.imageio.ImageIO;
 import java.io.IOException;
 
 import app.Photos;
@@ -38,18 +38,69 @@ import java.util.Optional;
  */
 public class OpenedAlbumDisplayController {
 	
+	/**
+	 * ListView to display Photo objects in Album
+	 */
 	@FXML ListView<Photo> photosList;
-	@FXML ListView<Tag> tagsList;
-	@FXML TextField dateDisplay;
-	@FXML TextArea captionDisplay;
-	@FXML ImageView photoDisplay;
-	@FXML ComboBox<Album> copyToAlbumList, moveToAlbumList;
 	
+	/**
+	 * ListView to display Tags for selected Photo
+	 */
+	@FXML ListView<Tag> tagsList;
+	
+	/**
+	 * TextField to display date of selected Photo
+	 */
+	@FXML TextField dateDisplay;
+	
+	/**
+	 * TextArea to display caption of selected Photo
+	 */
+	@FXML TextArea captionDisplay;
+	
+	/**
+	 * ImageView to display corresponding Image object of selected Photo
+	 */
+	@FXML ImageView photoDisplay;
+	
+	/**
+	 * ComboBox used to display Albums that selected Photo can be copied to
+	 */
+	@FXML ComboBox<Album> copyToAlbumList;
+	
+	/**
+	 * ComboBox used to display Albums that selected Photo can be moved to
+	 */
+	@FXML ComboBox<Album> moveToAlbumList;
+	
+	/**
+	 * ArrayList of Image objects loaded in for each Photo object in opened album
+	 */
 	ArrayList<Image> loadedImages;
+	
+	/**
+	 * holds the current stage (OpenedAlbumDisplay stage)
+	 */
 	Stage currentStage;
+	
+	/**
+	 * holds the currently opened Album object
+	 */
 	Album openedAlbum;
+	
+	/**
+	 * used to help display Photo objects in Album
+	 */
 	ObservableList<Photo> observablePhotos;
+	
+	/**
+	 * used to help display other Albums besides currently open Album
+	 */
 	ObservableList<Album> observableAlbums;
+	
+	/**
+	 * used to help display Tags of currently selected Photo
+	 */
 	ObservableList<Tag> observableTags;
 	
 	/**

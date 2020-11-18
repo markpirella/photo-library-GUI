@@ -1,14 +1,14 @@
 package view;
-import model.Album;
-import model.Program;
+//import model.Album;
+//import model.Program;
 import model.User;
 import app.Photos;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.Optional;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
@@ -32,7 +32,14 @@ import javafx.scene.control.ListView;
  * @author Nicholas Farinella
  */
 public class AdminSubsystemController {
+	/**
+	 * TextField for username input by user
+	 */
 	@FXML TextField inputUsername;
+	
+	/**
+	 * ListView to display existing Users
+	 */
 	@FXML ListView<String> userList;
 	
 	/**
