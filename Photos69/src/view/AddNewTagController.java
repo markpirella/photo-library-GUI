@@ -23,6 +23,11 @@ import model.Album;
 import model.Photo;
 import model.Tag;
 
+/**
+ * controller for AddTag.fxml
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class AddNewTagController {
 	
 	@FXML TextField inputExistingTagValue, inputNewTagType, inputNewTagValue;
@@ -32,14 +37,18 @@ public class AddNewTagController {
 	
 	ObservableList<TagType> observableExistingTagTypes;
 	ObservableList<Tag> observableTagsOnPreviousStage;
+	
+	/**
+	 * Photo object that user is trying to add tag to
+	 */
 	Photo currentPhoto;
 	
 	/**
-	 * method to get type of TagType
-	 * @param mainStage 
-	 * @param openedPhoto Photo object 
-	 * @param observableTags
-	 * @param tagsListOnPrevStage
+	 * method to be called when switching to AddNewTag stage
+	 * @param mainStage contains AddNewTag stage
+	 * @param openedPhoto Photo object to add tag to
+	 * @param observableTags ObservableList<Tag> of photo's tags
+	 * @param tagsListOnPrevStage ListView<Tag> of photo's tags on OpenedAlbumDisplay stage
 	 */
 	public void start(Stage mainStage, Photo openedPhoto, ObservableList<Tag> observableTags, ListView<Tag> tagsListOnPrevStage) {
 		
@@ -56,8 +65,9 @@ public class AddNewTagController {
 		
 	}
 	
-	/*
-	 * method
+	/**
+	 * method to handle Confirm button for adding a tag with a pre-existing tag type
+	 * @param event Confirm button pressed
 	 */
 	@FXML private void handleExistingTagConfirmButton(ActionEvent event) {
 		
@@ -149,6 +159,10 @@ public class AddNewTagController {
 		
 	}
 	
+	/**
+	 * method to handle either Cancel button being pressed
+	 * @param event Cancel button pressed
+	 */
 	@FXML private void handleCancelButton(ActionEvent event) {
 		
 		// close window
@@ -158,6 +172,10 @@ public class AddNewTagController {
 		
 	}
 	
+	/**
+	 * method to handle Quit button being pressed
+	 * @param event Quit button pressed
+	 */
 	@FXML private void handleQuitButton(ActionEvent event) {
 		
 		try {
@@ -170,8 +188,8 @@ public class AddNewTagController {
 	}
 	
 	/**
-	 * method to get type of TagType
-	 * @param event 
+	 * method to handle Confirm button for adding a new tag with a new, user-inputted tag type
+	 * @param event Confirm button for new tag with new tag type pressed
 	 */
 	@FXML private void handleNewTagConfirmButton(ActionEvent event) {
 		

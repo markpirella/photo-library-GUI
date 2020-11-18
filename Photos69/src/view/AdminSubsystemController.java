@@ -26,12 +26,24 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 
+/**
+ * controller for AdminSubsystem.fxml
+ * @author Mark Pirella
+ * @author Nicholas Farinella
+ */
 public class AdminSubsystemController {
 	@FXML TextField inputUsername;
 	@FXML ListView<String> userList;
 	
+	/**
+	 * ObservableList containing all saved users
+	 */
 	ObservableList<String> observableUsernames;// = FXCollections.observableArrayList(Photos.programSession.getUsernames());
 
+	/**
+	 * method to be called when switching to AdminSubsystem stage
+	 * @param mainStage contains AdminSubsystem stage
+	 */
 	public void start(Stage mainStage) {
 		//Photos.setStage(mainStage);
 		
@@ -53,6 +65,10 @@ public class AdminSubsystemController {
 		
 	}
 	
+	/**
+	 * method to handle Submit button being pressed (create new user)
+	 * @param event Submit button pressed
+	 */
 	@FXML private void handleSubmitButton(ActionEvent event) {
 		
 		// check for duplicate username
@@ -101,6 +117,10 @@ public class AdminSubsystemController {
 		
 	}
 	
+	/**
+	 * method used to handle Delete button being pressed (delete user)
+	 * @param event Delete button pressed
+	 */
 	@FXML private void handleDeleteButton(ActionEvent event) {
 		
 		int index = userList.getSelectionModel().getSelectedIndex();
@@ -125,6 +145,11 @@ public class AdminSubsystemController {
 		}
 	}
 	
+	/**
+	 * method to handle Logout of Admin button being pressed
+	 * @param event Logout of Admin button pressed
+	 * @throws IOException if writing Program object to disk fails
+	 */
 	@FXML private void handleLogoutButton(ActionEvent event) throws IOException {
 		
 		Stage stage = new Stage();
@@ -143,6 +168,11 @@ public class AdminSubsystemController {
 		
 	}
 	
+	/**
+	 * method used to handle Quit button being pressed (exit application)
+	 * @param event Quit button pressed
+	 * @throws IOException if writing Program object to disk fails
+	 */
 	@FXML private void handleQuitButton(ActionEvent event) throws IOException {
 		Photos.writeProgramObj(Photos.programSession);
 		System.exit(0);
