@@ -340,6 +340,14 @@ public class OpenedAlbumDisplayController {
 		// copy photo to album
 		copyToAlbumList.getValue().addPhoto(photosList.getSelectionModel().getSelectedItem());
 		
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("Photo successfully copied to " + copyToAlbumList.getValue().getName() + "!");
+		alert.showAndWait();
+		
+		
+		
 	}
 	
 	/**
@@ -368,6 +376,12 @@ public class OpenedAlbumDisplayController {
 			openedAlbum.removePhoto(index);
 			loadedImages.remove(index);
 		}
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("Photo successfully moved to " + moveToAlbumList.getValue().getName() + "!");
+		alert.showAndWait();
 		
 		if(observablePhotos.size() <= 0) {
 			displayPhotoDetails(true);
