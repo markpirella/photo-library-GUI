@@ -327,6 +327,15 @@ public class OpenedAlbumDisplayController {
 	 */
 	@FXML private void handleCopyPhotoButton(ActionEvent event) {
 		
+		if(photosList.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("No photo to move");
+			alert.setContentText("If empty, add photos to the album.");
+			alert.showAndWait();
+			return;
+		}
+		
 		// ensure user made a selection
 		if(copyToAlbumList.getValue() == null) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -355,6 +364,14 @@ public class OpenedAlbumDisplayController {
 	 * @param event move photo to another album button
 	 */
 	@FXML private void handleMovePhotoButton(ActionEvent event) {
+		if(photosList.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("No photo to move");
+			alert.setContentText("If empty, add photos to the album.");
+			alert.showAndWait();
+			return;
+		}
 		
 		// ensure user made a selection
 		if(moveToAlbumList.getValue() == null) {
